@@ -37,8 +37,7 @@ Biblioteca padrão do Python: para entrada/saída no terminal e lógica de menu.
 ⚙️ Instalação e Configuração
 
 1. Clonar o repositório
-   git clone https://github.com/seu-usuario/seu-projeto.git
-   cd seu-projeto
+   git clone 
 2. Criar ambiente virtual
    Python -m venv .venv
 3. Ativar ambiente virtual

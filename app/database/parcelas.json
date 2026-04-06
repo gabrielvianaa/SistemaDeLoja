@@ -1,0 +1,6 @@
+{
+  "max_parcelas": 12,
+  "sem_juros_ate": 3,
+  "tipo_taxa": "juros",
+  "taxa_mensal": 0.02
+}

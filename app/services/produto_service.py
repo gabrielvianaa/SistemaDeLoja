@@ -105,16 +105,3 @@ def deletar_produto(id: float) -> bool:
     finally:
         session.close()
 
-
-def atualizar_preco(id: float, novo_preco: float) -> Optional[ProdutoModel]:
-    session = SessionLocal()
-    try:
-        produto = session.query(ProdutoModel).filter_by(id=id).first()
-        if produto is None:
-            return None
-        produto.preco = novo_preco
-        session.commit()
-        session.refresh(produto)
-        return produto
-    finally:
-        session.close()

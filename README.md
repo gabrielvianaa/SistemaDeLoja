@@ -1,4 +1,5 @@
 🛒 Sistema de Loja (Simulação com Python + SQLAlchemy)
+
 📌 Descrição
 
 Este projeto consiste em um sistema de simulação de uma loja virtual desenvolvido em Python. A aplicação permite o gerenciamento completo de produtos, estoque, carrinho de compras e processamento de pagamentos, com persistência de dados utilizando banco de dados via SQLAlchemy.
@@ -33,6 +34,9 @@ Python: linguagem principal do projeto.
 SQLAlchemy: usado como ORM para modelagem e persistência de dados.
 SQLite: banco de dados local, acessado via sqlite3 e SQLAlchemy.
 Biblioteca padrão do Python: para entrada/saída no terminal e lógica de menu.
+
+Interface visual
+customtkinter
 
 ⚙️ Instalação e Configuração
 1. Clonar o repositório

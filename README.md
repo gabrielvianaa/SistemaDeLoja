@@ -16,7 +16,7 @@ Interface gráfica moderna em tema escuro, construída com Python e CustomTkinte
 
 ## Visão geral
 
-O HardWave é um sistema de ponto de venda (PDV) desktop para lojas de hardware. Ele reúne catálogo de produtos, carrinho de compras, processamento de pagamentos e painel administrativo em uma única aplicação leve — sem necessidade de servidor externo ou conexão com internet.
+O HARDWARE COMMERCE é um sistema de ponto de venda (PDV) desktop para lojas de hardware. Ele reúne catálogo de produtos, carrinho de compras, processamento de pagamentos e painel administrativo em uma única aplicação leve — sem necessidade de servidor externo ou conexão com internet.
 
 ### Funcionalidades principais
 

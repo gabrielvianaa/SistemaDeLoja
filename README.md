@@ -1,6 +1,6 @@
 <div align="center">
 
-# HardWave — Sistema de Loja
+# HARDWARE COMMERCE
 
 **Aplicação desktop para gerenciamento completo de uma loja de componentes de hardware.**  
 Interface gráfica moderna em tema escuro, construída com Python e CustomTkinter.

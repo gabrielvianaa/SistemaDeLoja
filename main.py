@@ -24,7 +24,8 @@ def ensure_produtos_schema():
     conn.close()
 
 ensure_produtos_schema()
-Base.metadata.drop_all(engine)
+# create_all uses checkfirst=True per table — only creates tables that are missing,
+# so existing data (users, saved carts, etc.) is never lost on restart.
 Base.metadata.create_all(engine)
 
 session = SessionLocal()

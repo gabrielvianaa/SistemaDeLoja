@@ -5,6 +5,7 @@ from app.services import produto_service
 from app.services.carrinho_service import adicionar_ao_carrinho
 from app.services.produto_service import buscar_produto_por_id, deletar_produto
 from app.services import admin_service
+from app.services import usuario_service
 from app.services.pagamento_service import (
     processar_pagamento, METODOS_DISPONIVEIS, METODOS_CARTAO,
     get_desconto, set_desconto,
@@ -23,6 +24,7 @@ class LojaApp:
         self.root.minsize(800, 520)
         self.carrinho = Carrinho()
         self.admin_logado = False
+        self.usuario_logado = None  # holds the logged-in Usuario object
         self._build_layout()
 
 
@@ -99,8 +101,24 @@ class LojaApp:
 
         section_label("LOJA")
         nav_btn("Listar Produtos",       self._view_produtos)
-        nav_btn("Ver Carrinho",          self._view_carrinho)
-        nav_btn("Adicionar ao Carrinho", self._dialog_adicionar_carrinho)
+        if self.usuario_logado is not None:
+            nav_btn("Ver Carrinho",          self._view_carrinho)
+
+        divider()
+
+        if self.usuario_logado is None:
+            section_label("CONTA")
+            nav_btn("Cadastrar-se",  self._dialog_cadastro_usuario, color="#a5b4fc")
+            nav_btn("Fazer Login",   self._dialog_login_usuario,    color="#a5b4fc")
+        else:
+            section_label("CONTA")
+            ctk.CTkLabel(
+                self.sidebar,
+                text=f"  {self.usuario_logado.nome} {self.usuario_logado.sobrenome}",
+                font=ctk.CTkFont("Arial", 12, "bold"), text_color="#6ee7b7",
+                anchor="w",
+            ).pack(fill="x", padx=16, pady=(4, 2))
+            nav_btn("Logout", self._logout_usuario, color="#f87171")
 
         divider()
 
@@ -114,6 +132,7 @@ class LojaApp:
             divider()
             nav_btn("Criar Admin",           self._dialog_criar_admin)
             nav_btn("Listar Admins",         self._view_admins)
+            nav_btn("Listar Usuarios",        self._view_usuarios)
             nav_btn("Configurar Descontos",     self._dialog_descontos)
             nav_btn("Configurar Parcelamento",  self._dialog_parcelas)
             nav_btn("Logout",                self._logout, color="#f87171")
@@ -234,6 +253,106 @@ class LojaApp:
 
     def _view_produtos(self):
         outer = self._content_frame("Produtos Disponiveis")
+
+        # When logged in, show a selectable list with an "Add to Cart" bottom bar
+        if self.usuario_logado is not None:
+            produtos = produto_service.listarProdutos()
+            cols = [("Nome", 240), ("Categoria", 160), ("Preco", 115), ("Estoque", 90)]
+
+            selected_id     = [None]
+            selected_frames = {}
+            estoque_map     = {p["id"]: p["estoque"] for p in produtos} if produtos else {}
+
+            scroll = ctk.CTkScrollableFrame(outer, fg_color="#282636", corner_radius=8)
+            scroll.pack(fill="both", expand=True)
+            self._table_header(scroll, cols)
+
+            if not produtos:
+                ctk.CTkLabel(scroll, text="Nenhum produto cadastrado.", text_color="#706e78").pack(pady=24)
+            else:
+                def select_row(pid):
+                    selected_id[0] = pid
+                    keys = list(selected_frames.keys())
+                    for p_id, rf in selected_frames.items():
+                        bg = "#67648a" if p_id == pid else (
+                            "#2e2c44" if keys.index(p_id) % 2 == 0 else "#242238")
+                        rf.configure(fg_color=bg)
+                    lbl_err.configure(text="")
+                    disp = estoque_map.get(pid, 0)
+                    lbl_disp.configure(
+                        text=f"Disponivel: {disp}",
+                        text_color="#f87171" if disp < 5 else "#6ee7b7",
+                    )
+
+                for i, p in enumerate(produtos):
+                    even = i % 2 == 0
+                    bg = "#2e2c44" if even else "#242238"
+                    row = ctk.CTkFrame(scroll, fg_color=bg, corner_radius=4, cursor="hand2")
+                    row.pack(fill="x", pady=1)
+                    estoque_color = "#f87171" if p["estoque"] < 5 else "#d1d5db"
+                    values  = [p["nome"], p["categoria"], f"R${p['preco']:.2f}", str(p["estoque"])]
+                    colors  = ["#f3f4f6", "#b0adc8", "#6ee7b7", estoque_color]
+                    for (_, width), text, color in zip(cols, values, colors):
+                        ctk.CTkLabel(row, text=text, width=width, anchor="w",
+                                     font=ctk.CTkFont("Arial", 12), text_color=color,
+                                     ).pack(side="left", padx=10, pady=6)
+                    pid = p["id"]
+                    selected_frames[pid] = row
+                    row.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
+                    for child in row.winfo_children():
+                        child.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
+
+            bottom = ctk.CTkFrame(outer, fg_color="#2c2a40", corner_radius=8)
+            bottom.pack(fill="x", pady=(6, 0))
+
+            ctk.CTkLabel(bottom, text="Quantidade:",
+                         font=ctk.CTkFont("Arial", 13), text_color="#d1d5db",
+                         ).pack(side="left", padx=(14, 6), pady=10)
+            e_qty = ctk.CTkEntry(bottom, width=72, height=34, placeholder_text="1")
+            e_qty.pack(side="left", pady=10)
+
+            lbl_disp = ctk.CTkLabel(bottom, text="Selecione um produto",
+                                    font=ctk.CTkFont("Arial", 11), text_color="#706e78")
+            lbl_disp.pack(side="left", padx=12, pady=10)
+
+            lbl_err = ctk.CTkLabel(bottom, text="",
+                                   font=ctk.CTkFont("Arial", 11), text_color="#f87171")
+            lbl_err.pack(side="left", padx=4, pady=10)
+
+            def ok():
+                if selected_id[0] is None:
+                    lbl_err.configure(text="Selecione um produto.")
+                    return
+                try:
+                    qty = int(e_qty.get()) if e_qty.get().strip() else 1
+                    if qty <= 0:
+                        raise ValueError
+                except ValueError:
+                    lbl_err.configure(text="Quantidade invalida.")
+                    return
+                resultado = adicionar_ao_carrinho(self.carrinho, selected_id[0], qty)
+                if "adicionado" in resultado.lower():
+                    self._sync_cart_to_db()
+                    self._update_cart_bar()
+                    lbl_err.configure(text="")
+                    disp = estoque_map.get(selected_id[0], 0) - qty
+                    estoque_map[selected_id[0]] = disp
+                    lbl_disp.configure(
+                        text=f"Adicionado! Disponivel: {disp}",
+                        text_color="#6ee7b7",
+                    )
+                    e_qty.delete(0, "end")
+                else:
+                    lbl_err.configure(text=resultado)
+
+            ctk.CTkButton(bottom, text="Adicionar ao Carrinho", height=34, width=200,
+                          fg_color="#860029", hover_color="#5e001c",
+                          font=ctk.CTkFont("Arial", 13, "bold"),
+                          command=ok, corner_radius=8,
+                          ).pack(side="right", padx=14, pady=10)
+            return
+
+        # Visitor: read-only table
         cols = [("Nome", 260), ("Categoria", 170), ("Preco", 120), ("Estoque", 95)]
         scroll = ctk.CTkScrollableFrame(outer, fg_color="#282636", corner_radius=8)
         scroll.pack(fill="both", expand=True)
@@ -251,229 +370,385 @@ class LojaApp:
                 (str(p["estoque"]), estoque_color),
             ], cols, i % 2 == 0)
 
-    def _view_carrinho(self):
-        outer = self._content_frame("Meu Carrinho")
-        if not self.carrinho.itens:
-            ctk.CTkLabel(
-                outer, text="Seu carrinho esta vazio.",
-                font=ctk.CTkFont("Arial", 14), text_color="#706e78",
-            ).pack(expand=True)
-            return
+    def _view_carrinho(self, _active_tab="carrinho"):
+        self._clear_content()
+        outer = ctk.CTkFrame(self.content, fg_color="transparent")
+        outer.pack(fill="both", expand=True, padx=28, pady=22)
+        ctk.CTkLabel(
+            outer, text="Meu Carrinho",
+            font=ctk.CTkFont("Arial", 20, "bold"), text_color="#f3f4f6",
+        ).pack(anchor="w", pady=(0, 10))
 
-        selected_pid = [None]
-        selected_frames = {}
+        tabview = ctk.CTkTabview(outer, fg_color="#282636", segmented_button_fg_color="#2c2a40",
+                                 segmented_button_selected_color="#860029",
+                                 segmented_button_selected_hover_color="#5e001c",
+                                 segmented_button_unselected_color="#2c2a40",
+                                 segmented_button_unselected_hover_color="#3f3d58",
+                                 text_color="#d1d5db", corner_radius=10)
+        tabview.pack(fill="both", expand=True)
+        tabview.add("Itens do Carrinho")
+        tabview.add("Adicionar Produtos")
+        tabview.set("Adicionar Produtos" if _active_tab == "adicionar" else "Itens do Carrinho")
 
-        cols = [("Nome", 240), ("Categoria", 150), ("Qtd", 60), ("Preco", 115), ("Subtotal", 125)]
+        # ── Tab 1: cart items ────────────────────────────────────────────────
+        tab_cart = tabview.tab("Itens do Carrinho")
+        tab_cart.grid_columnconfigure(0, weight=1)
+        tab_cart.grid_rowconfigure(0, weight=1)
 
-        scroll = ctk.CTkScrollableFrame(outer, fg_color="#282636", corner_radius=8)
-        scroll.pack(fill="both", expand=True)
+        def _build_cart_tab():
+            for w in tab_cart.winfo_children():
+                w.destroy()
 
-        # ── header ──
-        hdr = ctk.CTkFrame(scroll, fg_color="#575267", corner_radius=6)
-        hdr.pack(fill="x", pady=(0, 3))
-        for label, width in cols:
-            ctk.CTkLabel(
-                hdr, text=label, width=width, anchor="w",
-                font=ctk.CTkFont("Arial", 12, "bold"), text_color="#b0adc8",
-            ).pack(side="left", padx=10, pady=7)
-
-        def refresh_rows():
-            # rebuild rows in-place after a removal
-            for key in list(selected_frames.keys()):
-                selected_frames[key][0].destroy()
-                del selected_frames[key]
-            selected_pid[0] = None
-            lbl_sel.configure(text="Selecione um item")
-            lbl_err.configure(text="")
-            e_qty.delete(0, "end")
-            btn_remove.configure(state="disabled")
-            lbl_total.configure(
-                text=f"Total:  R${self.carrinho.total():.2f}" if self.carrinho.itens else "Carrinho vazio"
-            )
-  
             if not self.carrinho.itens:
-                self._view_carrinho()
+                ctk.CTkLabel(
+                    tab_cart, text="Seu carrinho esta vazio.",
+                    font=ctk.CTkFont("Arial", 14), text_color="#706e78",
+                ).pack(expand=True, pady=40)
                 return
+
+            selected_pid    = [None]
+            selected_frames = {}
+            cols = [("Nome", 240), ("Categoria", 150), ("Qtd", 60), ("Preco", 115), ("Subtotal", 125)]
+
+            scroll = ctk.CTkScrollableFrame(tab_cart, fg_color="#282636", corner_radius=8)
+            scroll.pack(fill="both", expand=True)
+
+            hdr = ctk.CTkFrame(scroll, fg_color="#575267", corner_radius=6)
+            hdr.pack(fill="x", pady=(0, 3))
+            for label, width in cols:
+                ctk.CTkLabel(hdr, text=label, width=width, anchor="w",
+                             font=ctk.CTkFont("Arial", 12, "bold"), text_color="#b0adc8",
+                             ).pack(side="left", padx=10, pady=7)
+
+            def refresh_rows():
+                for key in list(selected_frames.keys()):
+                    selected_frames[key][0].destroy()
+                    del selected_frames[key]
+                selected_pid[0] = None
+                lbl_sel.configure(text="Selecione um item")
+                lbl_err.configure(text="")
+                e_qty.delete(0, "end")
+                btn_remove.configure(state="disabled")
+                lbl_total.configure(
+                    text=f"Total:  R${self.carrinho.total():.2f}" if self.carrinho.itens else "Carrinho vazio"
+                )
+                if not self.carrinho.itens:
+                    _build_cart_tab()
+                    return
+                build_rows()
+
+            def select_row(pid):
+                selected_pid[0] = pid
+                keys = list(selected_frames.keys())
+                for p_id, (row_frame, _) in selected_frames.items():
+                    bg = "#67648a" if p_id == pid else (
+                        "#2e2c44" if keys.index(p_id) % 2 == 0 else "#242238")
+                    row_frame.configure(fg_color=bg)
+                item = next((it for it in self.carrinho.itens if it["produto_id"] == pid), None)
+                if item:
+                    prod = buscar_produto_por_id(pid)
+                    nome = prod["nome"] if prod else "Produto"
+                    lbl_sel.configure(text=f"{nome}  —  {item['quantidade']} un. no carrinho")
+                lbl_err.configure(text="")
+                btn_remove.configure(state="normal")
+
+            def build_rows():
+                for i, item in enumerate(self.carrinho.itens):
+                    even = i % 2 == 0
+                    bg = "#2e2c44" if even else "#242238"
+                    prod = buscar_produto_por_id(item["produto_id"])
+                    nome = prod["nome"] if prod else "Produto"
+                    row = ctk.CTkFrame(scroll, fg_color=bg, corner_radius=4, cursor="hand2")
+                    row.pack(fill="x", pady=1)
+                    values = [
+                        nome, item["categoria"], str(item["quantidade"]),
+                        f"R${item['preco']:.2f}", f"R${item['subtotal']:.2f}",
+                    ]
+                    colors = ["#f3f4f6", "#b0adc8", "#d1d5db", "#d1d5db", "#6ee7b7"]
+                    for (_, width), text, color in zip(cols, values, colors):
+                        ctk.CTkLabel(row, text=text, width=width, anchor="w",
+                                     font=ctk.CTkFont("Arial", 12), text_color=color,
+                                     ).pack(side="left", padx=10, pady=6)
+                    pid = item["produto_id"]
+                    selected_frames[pid] = (row, values)
+                    row.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
+                    for child in row.winfo_children():
+                        child.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
+
             build_rows()
 
-        def select_row(pid):
-            selected_pid[0] = pid
-            for p_id, (row_frame, _) in selected_frames.items():
-                keys = list(selected_frames.keys())
-                bg = "#67648a" if p_id == pid else ("#2e2c44" if keys.index(p_id) % 2 == 0 else "#242238")
-                row_frame.configure(fg_color=bg)
-            item = next((it for it in self.carrinho.itens if it["produto_id"] == pid), None)
-            if item:
-                prod = buscar_produto_por_id(pid)
-                nome = prod["nome"] if prod else "Produto"
-                lbl_sel.configure(text=f"{nome}  —  {item['quantidade']} un. no carrinho")
-            lbl_err.configure(text="")
-            btn_remove.configure(state="normal")
+            total_bar = ctk.CTkFrame(tab_cart, fg_color="#575267", height=42, corner_radius=8)
+            total_bar.pack(fill="x", pady=(6, 4))
+            total_bar.pack_propagate(False)
+            lbl_total = ctk.CTkLabel(
+                total_bar, text=f"Total:  R${self.carrinho.total():.2f}",
+                font=ctk.CTkFont("Arial", 15, "bold"), text_color="#6ee7b7",
+            )
+            lbl_total.pack(side="right", padx=20, pady=10)
 
-        def build_rows():
-            for i, item in enumerate(self.carrinho.itens):
-                even = i % 2 == 0
-                bg = "#2e2c44" if even else "#242238"
-                prod = buscar_produto_por_id(item["produto_id"])
-                nome = prod["nome"] if prod else "Produto"
-                row = ctk.CTkFrame(scroll, fg_color=bg, corner_radius=4, cursor="hand2")
-                row.pack(fill="x", pady=1)
-                values = [
-                    nome,
-                    item["categoria"],
-                    str(item["quantidade"]),
-                    f"R${item['preco']:.2f}",
-                    f"R${item['subtotal']:.2f}",
-                ]
-                colors = ["#f3f4f6", "#b0adc8", "#d1d5db", "#d1d5db", "#6ee7b7"]
-                for (_, width), text, color in zip(cols, values, colors):
-                    ctk.CTkLabel(
-                        row, text=text, width=width, anchor="w",
-                        font=ctk.CTkFont("Arial", 12), text_color=color,
-                    ).pack(side="left", padx=10, pady=6)
-                pid = item["produto_id"]
-                selected_frames[pid] = (row, values)
-                row.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
-                for child in row.winfo_children():
-                    child.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
+            bottom = ctk.CTkFrame(tab_cart, fg_color="#2c2a40", corner_radius=8)
+            bottom.pack(fill="x", pady=(0, 2))
 
-        build_rows()
+            lbl_sel = ctk.CTkLabel(bottom, text="Selecione um item",
+                                   font=ctk.CTkFont("Arial", 12), text_color="#8d8980")
+            lbl_sel.pack(side="left", padx=14, pady=10)
+            lbl_err = ctk.CTkLabel(bottom, text="",
+                                   font=ctk.CTkFont("Arial", 11), text_color="#f87171")
+            lbl_err.pack(side="left", padx=6, pady=10)
 
-        
-        total_bar = ctk.CTkFrame(outer, fg_color="#575267", height=42, corner_radius=8)
-        total_bar.pack(fill="x", pady=(6, 4))
-        total_bar.pack_propagate(False)
-        lbl_total = ctk.CTkLabel(
-            total_bar,
-            text=f"Total:  R${self.carrinho.total():.2f}",
-            font=ctk.CTkFont("Arial", 15, "bold"), text_color="#6ee7b7",
-        )
-        lbl_total.pack(side="right", padx=20, pady=10)
+            def do_remove():
+                pid = selected_pid[0]
+                if pid is None:
+                    return
+                item = next((it for it in self.carrinho.itens if it["produto_id"] == pid), None)
+                if not item:
+                    return
+                raw = e_qty.get().strip()
+                try:
+                    qty = int(raw) if raw else item["quantidade"]
+                    if qty <= 0:
+                        raise ValueError
+                except ValueError:
+                    lbl_err.configure(text="Quantidade invalida.")
+                    return
+                from app.services.produto_service import atualizar_estoque, buscar_produto_por_id as _bpp
+                prod = _bpp(pid)
+                removido = self.carrinho.remover_item(pid, qty)
+                if prod and removido:
+                    atualizar_estoque(pid, prod["estoque"] + removido)
+                self._sync_cart_to_db()
+                self._update_cart_bar()
+                refresh_rows()
 
-       
-        bottom = ctk.CTkFrame(outer, fg_color="#2c2a40", corner_radius=8)
-        bottom.pack(fill="x", pady=(0, 2))
+            ctk.CTkLabel(bottom, text="Qtd a remover:",
+                         font=ctk.CTkFont("Arial", 12), text_color="#d1d5db",
+                         ).pack(side="right", padx=(0, 6), pady=10)
+            e_qty = ctk.CTkEntry(bottom, width=62, height=32, placeholder_text="tudo")
+            e_qty.pack(side="right", pady=10)
+            btn_remove = ctk.CTkButton(
+                bottom, text="Remover do Carrinho", height=32, width=180,
+                fg_color="#7f1d1d", hover_color="#5c1414",
+                font=ctk.CTkFont("Arial", 12, "bold"),
+                command=do_remove, corner_radius=8, state="disabled",
+            )
+            btn_remove.pack(side="right", padx=14, pady=10)
 
-        lbl_sel = ctk.CTkLabel(
-            bottom, text="Selecione um item",
-            font=ctk.CTkFont("Arial", 12), text_color="#8d8980",
-        )
-        lbl_sel.pack(side="left", padx=14, pady=10)
+            checkout_bar = ctk.CTkFrame(tab_cart, fg_color="transparent")
+            checkout_bar.pack(fill="x", pady=(4, 0))
+            ctk.CTkLabel(checkout_bar, text="Selecione o metodo e finalize:",
+                         font=ctk.CTkFont("Arial", 12), text_color="#8d8980",
+                         ).pack(side="left", padx=14)
+            combo_metodo = ctk.CTkComboBox(
+                checkout_bar, values=METODOS_DISPONIVEIS,
+                state="readonly", width=190, height=34,
+                command=lambda _: update_checkout_preview(),
+            )
+            combo_metodo.set(METODOS_DISPONIVEIS[0])
+            combo_metodo.pack(side="left", padx=(6, 0))
+            lbl_checkout_info = ctk.CTkLabel(checkout_bar, text="",
+                                             font=ctk.CTkFont("Arial", 11), text_color="#fbbf24")
+            lbl_checkout_info.pack(side="left", padx=10)
 
-        lbl_err = ctk.CTkLabel(
-            bottom, text="",
-            font=ctk.CTkFont("Arial", 11), text_color="#f87171",
-        )
-        lbl_err.pack(side="left", padx=6, pady=10)
-
-        def do_remove():
-            pid = selected_pid[0]
-            if pid is None:
-                return
-            item = next((it for it in self.carrinho.itens if it["produto_id"] == pid), None)
-            if not item:
-                return
-            raw = e_qty.get().strip()
-            try:
-                qty = int(raw) if raw else item["quantidade"]
-                if qty <= 0:
-                    raise ValueError
-            except ValueError:
-                lbl_err.configure(text="Quantidade invalida.")
-                return
-            from app.services.produto_service import atualizar_estoque, buscar_produto_por_id as _bpp
-            prod = _bpp(pid)
-            removido = self.carrinho.remover_item(pid, qty)
-            if prod and removido:
-                atualizar_estoque(pid, prod["estoque"] + removido)
-            self._update_cart_bar()
-            refresh_rows()
-
-        ctk.CTkLabel(
-            bottom, text="Qtd a remover:",
-            font=ctk.CTkFont("Arial", 12), text_color="#d1d5db",
-        ).pack(side="right", padx=(0, 6), pady=10)
-
-        e_qty = ctk.CTkEntry(bottom, width=62, height=32, placeholder_text="tudo")
-        e_qty.pack(side="right", pady=10)
-
-        btn_remove = ctk.CTkButton(
-            bottom, text="Remover do Carrinho", height=32, width=180,
-            fg_color="#7f1d1d", hover_color="#5c1414",
-            font=ctk.CTkFont("Arial", 12, "bold"),
-            command=do_remove, corner_radius=8, state="disabled",
-        )
-        btn_remove.pack(side="right", padx=14, pady=10)
-
-        checkout_bar = ctk.CTkFrame(outer, fg_color="transparent")
-        checkout_bar.pack(fill="x", pady=(4, 0))
-
-        ctk.CTkLabel(
-            checkout_bar,
-            text="Selecione o metodo e finalize:",
-            font=ctk.CTkFont("Arial", 12), text_color="#8d8980",
-        ).pack(side="left", padx=14)
-
-        combo_metodo = ctk.CTkComboBox(
-            checkout_bar, values=METODOS_DISPONIVEIS,
-            state="readonly", width=190, height=34,
-            command=lambda _: update_checkout_preview(),
-        )
-        combo_metodo.set(METODOS_DISPONIVEIS[0])
-        combo_metodo.pack(side="left", padx=(6, 0))
-
-        lbl_checkout_info = ctk.CTkLabel(
-            checkout_bar, text="",
-            font=ctk.CTkFont("Arial", 11), text_color="#fbbf24",
-        )
-        lbl_checkout_info.pack(side="left", padx=10)
-
-        def update_checkout_preview():
-            metodo = combo_metodo.get()
-            subtotal = self.carrinho.total()
-            if metodo in METODOS_CARTAO:
-                opts = calcular_parcelas(subtotal)
-                cfg = get_parcelas_config()
-                max_p = cfg["max_parcelas"]
-                opt1 = opts[0]
-                lbl_total.configure(text=f"Total:  R${opt1['total']:.2f}")
-                lbl_checkout_info.configure(
-                    text=f"Parcelavel em ate {max_p}x  —  clique em Finalizar para detalhes",
-                    text_color="#b0adc8",
-                )
-            else:
-                pct = get_desconto(metodo)
-                total_final = subtotal * (1 - pct)
-                lbl_total.configure(text=f"Total:  R${total_final:.2f}")
-                if pct > 0:
+            def update_checkout_preview():
+                metodo = combo_metodo.get()
+                subtotal = self.carrinho.total()
+                if metodo in METODOS_CARTAO:
+                    opts = calcular_parcelas(subtotal)
+                    cfg = get_parcelas_config()
+                    max_p = cfg["max_parcelas"]
+                    lbl_total.configure(text=f"Total:  R${opts[0]['total']:.2f}")
                     lbl_checkout_info.configure(
-                        text=f"{int(pct*100)}% desc.  economia R${subtotal*pct:.2f}",
-                        text_color="#fbbf24",
+                        text=f"Parcelavel em ate {max_p}x  —  clique em Finalizar para detalhes",
+                        text_color="#b0adc8",
                     )
                 else:
-                    lbl_checkout_info.configure(text="")
+                    pct = get_desconto(metodo)
+                    total_final = subtotal * (1 - pct)
+                    lbl_total.configure(text=f"Total:  R${total_final:.2f}")
+                    if pct > 0:
+                        lbl_checkout_info.configure(
+                            text=f"{int(pct*100)}% desc.  economia R${subtotal*pct:.2f}",
+                            text_color="#fbbf24",
+                        )
+                    else:
+                        lbl_checkout_info.configure(text="")
 
-        update_checkout_preview()
+            update_checkout_preview()
 
-        def confirmar_compra():
-            metodo = combo_metodo.get()
-            if metodo in METODOS_CARTAO:
-                self._dialog_cartao(metodo, lbl_err)
-            else:
-                try:
-                    pedido = processar_pagamento(self.carrinho, metodo)
-                except ValueError as ex:
-                    lbl_err.configure(text=str(ex))
+            def confirmar_compra():
+                metodo = combo_metodo.get()
+                if metodo in METODOS_CARTAO:
+                    self._dialog_cartao(metodo, lbl_err)
+                else:
+                    try:
+                        pedido = processar_pagamento(self.carrinho, metodo)
+                    except ValueError as ex:
+                        lbl_err.configure(text=str(ex))
+                        return
+                    if self.usuario_logado is not None:
+                        usuario_service.limpar_carrinho_db(self.usuario_logado.id)
+                    self._update_cart_bar()
+                    self._show_success(pedido)
+
+            ctk.CTkButton(
+                checkout_bar, text="Finalizar Compra", height=34, width=160,
+                fg_color="#15803d", hover_color="#166534",
+                font=ctk.CTkFont("Arial", 13, "bold"),
+                command=confirmar_compra, corner_radius=8,
+            ).pack(side="right", padx=14)
+
+        _build_cart_tab()
+
+        # ── Tab 2: add products ──────────────────────────────────────────────
+        tab_add = tabview.tab("Adicionar Produtos")
+        tab_add.grid_columnconfigure(0, weight=1)
+        tab_add.grid_rowconfigure(0, weight=1)
+
+        produtos = produto_service.listarProdutos()
+        if not produtos:
+            ctk.CTkLabel(tab_add, text="Nenhum produto disponivel.", text_color="#706e78").pack(pady=40)
+        else:
+            selected_id     = [None]
+            selected_frames2 = {}
+            cols2 = [("Nome", 230), ("Categoria", 150), ("Preco", 110), ("Disponivel", 100)]
+            estoque_map = {p["id"]: p["estoque"] for p in produtos}
+
+            list_outer = ctk.CTkFrame(tab_add, fg_color="#282636", corner_radius=8)
+            list_outer.pack(fill="both", expand=True)
+
+            hdr2 = ctk.CTkFrame(list_outer, fg_color="#575267", corner_radius=6)
+            hdr2.pack(fill="x", padx=4, pady=(4, 0))
+            for label, width in cols2:
+                ctk.CTkLabel(hdr2, text=label, width=width, anchor="w",
+                             font=ctk.CTkFont("Arial", 11, "bold"), text_color="#b0adc8",
+                             ).pack(side="left", padx=8, pady=5)
+
+            scroll2 = ctk.CTkScrollableFrame(list_outer, fg_color="transparent", corner_radius=0)
+            scroll2.pack(fill="both", expand=True, padx=4, pady=(2, 4))
+
+            lbl_err2 = ctk.CTkLabel(tab_add, text="",
+                                    font=ctk.CTkFont("Arial", 11), text_color="#f87171")
+            lbl_err2.pack(anchor="w", padx=4)
+
+            def select_row2(pid):
+                selected_id[0] = pid
+                keys = list(selected_frames2.keys())
+                for p_id, (rf, _) in selected_frames2.items():
+                    bg = "#67648a" if p_id == pid else (
+                        "#2e2c44" if keys.index(p_id) % 2 == 0 else "#242238")
+                    rf.configure(fg_color=bg)
+                lbl_err2.configure(text="")
+                disponivel = estoque_map.get(pid, 0)
+                lbl_disp.configure(
+                    text=f"Disponivel: {disponivel}",
+                    text_color="#f87171" if disponivel < 5 else "#6ee7b7",
+                )
+
+            for i, p in enumerate(produtos):
+                even = i % 2 == 0
+                bg = "#2e2c44" if even else "#242238"
+                row = ctk.CTkFrame(scroll2, fg_color=bg, corner_radius=4, cursor="hand2")
+                row.pack(fill="x", pady=1)
+                row_values = [p["nome"], p["categoria"], f"R${p['preco']:.2f}", f"{p['estoque']} un."]
+                colors = ["#f3f4f6", "#b0adc8", "#6ee7b7",
+                          "#f87171" if p["estoque"] < 5 else "#8d8980"]
+                for (_, width), text, color in zip(cols2, row_values, colors):
+                    ctk.CTkLabel(row, text=text, width=width, anchor="w",
+                                 font=ctk.CTkFont("Arial", 12), text_color=color,
+                                 ).pack(side="left", padx=8, pady=6)
+                pid = p["id"]
+                selected_frames2[pid] = (row, row_values)
+                row.bind("<Button-1>", lambda e, _pid=pid: select_row2(_pid))
+                for child in row.winfo_children():
+                    child.bind("<Button-1>", lambda e, _pid=pid: select_row2(_pid))
+
+            bottom2 = ctk.CTkFrame(tab_add, fg_color="#2c2a40", corner_radius=8)
+            bottom2.pack(fill="x", pady=(6, 0))
+
+            ctk.CTkLabel(bottom2, text="Quantidade:",
+                         font=ctk.CTkFont("Arial", 13), text_color="#d1d5db",
+                         ).pack(side="left", padx=(14, 6), pady=10)
+            e_qty2 = ctk.CTkEntry(bottom2, width=72, height=34, placeholder_text="1")
+            e_qty2.pack(side="left", pady=10)
+            lbl_disp = ctk.CTkLabel(bottom2, text="Selecione um produto",
+                                    font=ctk.CTkFont("Arial", 11), text_color="#706e78")
+            lbl_disp.pack(side="left", padx=12, pady=10)
+
+            def ok2():
+                if selected_id[0] is None:
+                    lbl_err2.configure(text="Selecione um produto.")
                     return
-                self._update_cart_bar()
-                self._show_success(pedido)
+                try:
+                    qty = int(e_qty2.get()) if e_qty2.get().strip() else 1
+                    if qty <= 0:
+                        raise ValueError
+                except ValueError:
+                    lbl_err2.configure(text="Quantidade invalida.")
+                    return
+                resultado = adicionar_ao_carrinho(self.carrinho, selected_id[0], qty)
+                if "adicionado" in resultado.lower():
+                    self._sync_cart_to_db()
+                    self._update_cart_bar()
+                    # Refresh cart tab and switch to it
+                    self._view_carrinho(_active_tab="carrinho")
+                else:
+                    lbl_err2.configure(text=resultado)
 
-        ctk.CTkButton(
-            checkout_bar, text="Finalizar Compra", height=34, width=160,
-            fg_color="#15803d", hover_color="#166534",
-            font=ctk.CTkFont("Arial", 13, "bold"),
-            command=confirmar_compra, corner_radius=8,
-        ).pack(side="right", padx=14)
+            ctk.CTkButton(bottom2, text="Adicionar ao Carrinho", height=34, width=200,
+                          fg_color="#860029", hover_color="#5e001c",
+                          font=ctk.CTkFont("Arial", 13, "bold"),
+                          command=ok2, corner_radius=8,
+                          ).pack(side="right", padx=14, pady=10)
+
+
+
+    def _view_usuarios(self):
+        import re as _re
+
+        def _mask_cpf(cpf: str) -> str:
+            """Show only last 2 digits: ***.***.**-XX"""
+            digits = _re.sub(r"\D", "", cpf)
+            if len(digits) == 11:
+                return f"***.***.**-{digits[9:11]}"
+            return "***.***.***-**"
+
+        def _mask_email(email: str) -> str:
+            """Show first 2 chars then *** and full domain: jo***@email.com"""
+            if "@" not in email:
+                return "***"
+            local, domain = email.split("@", 1)
+            visible = local[:2] if len(local) >= 2 else local
+            return f"{visible}***@{domain}"
+
+        outer = self._content_frame("Usuarios Cadastrados")
+        cols = [("ID", 50), ("Nome", 190), ("Email", 240), ("CPF", 160)]
+        scroll = ctk.CTkScrollableFrame(outer, fg_color="#282636", corner_radius=8)
+        scroll.pack(fill="both", expand=True)
+        self._table_header(scroll, cols)
+
+        from app.database.connection import SessionLocal
+        from app.database.models import Usuario
+        session = SessionLocal()
+        try:
+            usuarios = session.query(Usuario).all()
+            dados = [
+                (u.id, f"{u.nome} {u.sobrenome}", u.email, u.cpf)
+                for u in usuarios
+            ]
+        finally:
+            session.close()
+
+        if not dados:
+            ctk.CTkLabel(scroll, text="Nenhum usuario cadastrado.", text_color="#706e78").pack(pady=24)
+            return
+
+        for i, (uid, nome, email, cpf) in enumerate(dados):
+            self._table_row(scroll, [
+                str(uid),
+                (nome, "#f3f4f6"),
+                (_mask_email(email), "#b0adc8"),
+                (_mask_cpf(cpf), "#8d8980"),
+            ], cols, i % 2 == 0)
 
     def _view_admins(self):
         outer = self._content_frame("Administradores")
@@ -555,6 +830,162 @@ class LojaApp:
         ).pack(fill="x", pady=(12, 4))
 
 
+    def _sync_cart_to_db(self):
+        """Persists the current in-memory cart to the database (when user is logged in)."""
+        if self.usuario_logado is not None:
+            usuario_service.salvar_carrinho(
+                self.usuario_logado.id, self.carrinho.itens
+            )
+
+    def _load_and_merge_cart(self):
+        """Loads the saved cart from DB and merges it with the current in-memory cart."""
+        if self.usuario_logado is None:
+            return
+        saved = usuario_service.carregar_carrinho(self.usuario_logado.id)
+        current_ids = {item["produto_id"] for item in self.carrinho.itens}
+        for item in saved:
+            if item["produto_id"] not in current_ids:
+                # Restore directly — stock was already reduced in the previous session
+                self.carrinho.itens.append(item)
+        self._update_cart_bar()
+        # Sync merged state back so it is consistent
+        usuario_service.salvar_carrinho(
+            self.usuario_logado.id, self.carrinho.itens
+        )
+
+    def _dialog_login_usuario(self):
+        outer, body = self._form_card("Login de Usuario")
+        e_email = self._ifield(body, "Email", "seu@email.com")
+        e_senha = self._ifield_password(body, "Senha")
+        lbl     = self._ierr(body)
+
+        def ok():
+            email = e_email.get().strip()
+            senha = e_senha.get()
+            if not email or not senha:
+                lbl.configure(text="Preencha email e senha.")
+                return
+            u = usuario_service.autenticar_usuario(email, senha)
+            if u is None:
+                e_senha.delete(0, "end")
+                lbl.configure(text="Email ou senha incorretos.")
+                return
+            self.usuario_logado = u
+            self.lbl_status.configure(
+                text=f"{u.nome} {u.sobrenome}", text_color="#a5b4fc"
+            )
+            self._load_and_merge_cart()
+            self._build_sidebar()
+            self._show_welcome()
+
+        e_senha.bind("<Return>", lambda _: ok())
+        self._ibtn(body, "Entrar", ok)
+        ctk.CTkButton(
+            body, text="Nao tem conta? Cadastre-se", height=32,
+            fg_color="transparent", hover_color="#3f3d58",
+            font=ctk.CTkFont("Arial", 12), text_color="#a5b4fc",
+            command=self._dialog_cadastro_usuario, corner_radius=8,
+        ).pack(fill="x", pady=(4, 0))
+
+    def _dialog_cadastro_usuario(self):
+        import re as _re
+        outer, body = self._form_card("Cadastro de Usuario")
+
+        row_nome = ctk.CTkFrame(body, fg_color="transparent")
+        row_nome.pack(fill="x", pady=(6, 0))
+        ctk.CTkLabel(row_nome, text="Nome", anchor="w",
+                     font=ctk.CTkFont("Arial", 12), text_color="#8d8980").pack(
+            side="left", expand=True, fill="x"
+        )
+        ctk.CTkLabel(row_nome, text="Sobrenome", anchor="w",
+                     font=ctk.CTkFont("Arial", 12), text_color="#8d8980").pack(
+            side="left", expand=True, fill="x", padx=(10, 0)
+        )
+        row_nome_e = ctk.CTkFrame(body, fg_color="transparent")
+        row_nome_e.pack(fill="x", pady=(2, 4))
+        e_nome     = ctk.CTkEntry(row_nome_e, height=38, placeholder_text="ex: Joao")
+        e_nome.pack(side="left", expand=True, fill="x")
+        e_sobrenome = ctk.CTkEntry(row_nome_e, height=38, placeholder_text="ex: Silva")
+        e_sobrenome.pack(side="left", expand=True, fill="x", padx=(10, 0))
+
+        e_email = self._ifield(body, "Email", "seu@email.com")
+        e_cpf   = self._ifield(body, "CPF", "XXX.XXX.XXX-XX")
+        e_senha = self._ifield_password(body, "Senha")
+        lbl     = self._ierr(body)
+
+        # Auto-format CPF as the user types (insert dots and dash)
+        def _fmt_cpf(event=None):
+            raw = _re.sub(r"\D", "", e_cpf.get())[:11]
+            if len(raw) <= 3:
+                formatted = raw
+            elif len(raw) <= 6:
+                formatted = f"{raw[:3]}.{raw[3:]}"
+            elif len(raw) <= 9:
+                formatted = f"{raw[:3]}.{raw[3:6]}.{raw[6:]}"
+            else:
+                formatted = f"{raw[:3]}.{raw[3:6]}.{raw[6:9]}-{raw[9:]}"
+            cur_val = e_cpf.get()
+            if cur_val != formatted:
+                e_cpf.delete(0, "end")
+                e_cpf.insert(0, formatted)
+
+        e_cpf.bind("<KeyRelease>", _fmt_cpf)
+
+        def ok():
+            nome      = e_nome.get().strip()
+            sobrenome = e_sobrenome.get().strip()
+            email     = e_email.get().strip()
+            cpf       = e_cpf.get().strip()
+            senha     = e_senha.get()
+
+            if not nome:
+                lbl.configure(text="Informe o nome.")
+                return
+            if not sobrenome:
+                lbl.configure(text="Informe o sobrenome.")
+                return
+            if not email or "@" not in email:
+                lbl.configure(text="Informe um email valido.")
+                return
+            if not usuario_service.validar_cpf(cpf):
+                lbl.configure(text="CPF invalido. Verifique os digitos e o formato.")
+                return
+            if not senha or len(senha) < 6:
+                lbl.configure(text="Senha deve ter pelo menos 6 caracteres.")
+                return
+            if usuario_service.buscar_usuario_por_email(email) is not None:
+                lbl.configure(text="Este email ja esta cadastrado.")
+                return
+            if usuario_service.buscar_usuario_por_cpf(cpf) is not None:
+                lbl.configure(text="Este CPF ja esta cadastrado.")
+                return
+            try:
+                u = usuario_service.cadastrar_usuario(nome, sobrenome, email, cpf, senha)
+            except Exception as ex:
+                lbl.configure(text=str(ex))
+                return
+            self.usuario_logado = u
+            self.lbl_status.configure(
+                text=f"{u.nome} {u.sobrenome}", text_color="#a5b4fc"
+            )
+            self._build_sidebar()
+            self._show_welcome()
+
+        self._ibtn(body, "Cadastrar", ok)
+        ctk.CTkButton(
+            body, text="Ja tem conta? Fazer login", height=32,
+            fg_color="transparent", hover_color="#3f3d58",
+            font=ctk.CTkFont("Arial", 12), text_color="#a5b4fc",
+            command=self._dialog_login_usuario, corner_radius=8,
+        ).pack(fill="x", pady=(4, 0))
+
+    def _logout_usuario(self):
+        self._sync_cart_to_db()
+        self.usuario_logado = None
+        self.lbl_status.configure(text="Visitante", text_color="#8d8980")
+        self._build_sidebar()
+        self._show_welcome()
+
     def _dialog_login(self):
         outer, body = self._form_card("Login Admin")
         e_user = self._ifield(body, "Username", "admin")
@@ -575,104 +1006,6 @@ class LojaApp:
 
         e_pass.bind("<Return>", lambda _: ok())
         self._ibtn(body, "Entrar", ok)
-
-    def _dialog_adicionar_carrinho(self):
-        produtos = produto_service.listarProdutos()
-        outer = self._content_frame("Adicionar ao Carrinho")
-        if not produtos:
-            ctk.CTkLabel(outer, text="Nenhum produto disponivel.", text_color="#706e78").pack(pady=24)
-            return
-
-        selected_id    = [None]
-        selected_frames = {}
-        cols = [("Nome", 230), ("Categoria", 150), ("Preco", 110), ("Disponivel", 100)]
-        estoque_map = {p["id"]: p["estoque"] for p in produtos}
-
-        list_outer = ctk.CTkFrame(outer, fg_color="#282636", corner_radius=8)
-        list_outer.pack(fill="both", expand=True)
-
-        hdr = ctk.CTkFrame(list_outer, fg_color="#575267", corner_radius=6)
-        hdr.pack(fill="x", padx=4, pady=(4, 0))
-        for label, width in cols:
-            ctk.CTkLabel(hdr, text=label, width=width, anchor="w",
-                         font=ctk.CTkFont("Arial", 11, "bold"), text_color="#b0adc8",
-                         ).pack(side="left", padx=8, pady=5)
-
-        scroll = ctk.CTkScrollableFrame(list_outer, fg_color="transparent", corner_radius=0)
-        scroll.pack(fill="both", expand=True, padx=4, pady=(2, 4))
-
-        def select_row(pid):
-            selected_id[0] = pid
-            keys = list(selected_frames.keys())
-            for p_id, (rf, _) in selected_frames.items():
-                bg = "#67648a" if p_id == pid else (
-                    "#2e2c44" if keys.index(p_id) % 2 == 0 else "#242238")
-                rf.configure(fg_color=bg)
-            lbl_err.configure(text="")
-            disponivel = estoque_map.get(pid, 0)
-            lbl_disp.configure(
-                text=f"Disponivel: {disponivel}",
-                text_color="#f87171" if disponivel < 5 else "#6ee7b7",
-            )
-
-        for i, p in enumerate(produtos):
-            even = i % 2 == 0
-            bg = "#2e2c44" if even else "#242238"
-            row = ctk.CTkFrame(scroll, fg_color=bg, corner_radius=4, cursor="hand2")
-            row.pack(fill="x", pady=1)
-            row_values = [p["nome"], p["categoria"], f"R${p['preco']:.2f}", f"{p['estoque']} un."]
-            colors = ["#f3f4f6", "#b0adc8", "#6ee7b7",
-                      "#f87171" if p["estoque"] < 5 else "#8d8980"]
-            for (_, width), text, color in zip(cols, row_values, colors):
-                ctk.CTkLabel(row, text=text, width=width, anchor="w",
-                             font=ctk.CTkFont("Arial", 12), text_color=color,
-                             ).pack(side="left", padx=8, pady=6)
-            pid = p["id"]
-            selected_frames[pid] = (row, row_values)
-            row.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
-            for child in row.winfo_children():
-                child.bind("<Button-1>", lambda e, _pid=pid: select_row(_pid))
-
-        bottom = ctk.CTkFrame(outer, fg_color="#2c2a40", corner_radius=8)
-        bottom.pack(fill="x", pady=(6, 0))
-
-        ctk.CTkLabel(bottom, text="Quantidade:",
-                     font=ctk.CTkFont("Arial", 13), text_color="#d1d5db",
-                     ).pack(side="left", padx=(14, 6), pady=10)
-        e_qty = ctk.CTkEntry(bottom, width=72, height=34, placeholder_text="1")
-        e_qty.pack(side="left", pady=10)
-
-        lbl_disp = ctk.CTkLabel(bottom, text="Selecione um produto",
-                                font=ctk.CTkFont("Arial", 11), text_color="#706e78")
-        lbl_disp.pack(side="left", padx=12, pady=10)
-
-        lbl_err = ctk.CTkLabel(bottom, text="",
-                               font=ctk.CTkFont("Arial", 11), text_color="#f87171")
-        lbl_err.pack(side="left", padx=4, pady=10)
-
-        def ok():
-            if selected_id[0] is None:
-                lbl_err.configure(text="Selecione um produto.")
-                return
-            try:
-                qty = int(e_qty.get()) if e_qty.get().strip() else 1
-                if qty <= 0:
-                    raise ValueError
-            except ValueError:
-                lbl_err.configure(text="Quantidade invalida.")
-                return
-            resultado = adicionar_ao_carrinho(self.carrinho, selected_id[0], qty)
-            if "adicionado" in resultado.lower():
-                self._update_cart_bar()
-                self._view_carrinho()
-            else:
-                lbl_err.configure(text=resultado)
-
-        ctk.CTkButton(bottom, text="Adicionar ao Carrinho", height=34, width=200,
-                      fg_color="#860029", hover_color="#5e001c",
-                      font=ctk.CTkFont("Arial", 13, "bold"),
-                      command=ok, corner_radius=8,
-                      ).pack(side="right", padx=14, pady=10)
 
     def _dialog_cadastrar_produto(self):
         session = SessionLocal()
@@ -1093,6 +1426,8 @@ class LojaApp:
             except ValueError as ex:
                 lbl_err.configure(text=str(ex))
                 return
+            if self.usuario_logado is not None:
+                usuario_service.limpar_carrinho_db(self.usuario_logado.id)
             self._update_cart_bar()
             self._show_success(pedido)
 

@@ -1,52 +1,239 @@
-🛒 Sistema de Loja (Simulação com Python + SQLAlchemy)
+<div align="center">
 
-📌 Descrição
+# HardWave — Sistema de Loja
 
-Este projeto consiste em um sistema de simulação de uma loja virtual desenvolvido em Python. A aplicação permite o gerenciamento completo de produtos, estoque, carrinho de compras e processamento de pagamentos, com persistência de dados utilizando banco de dados via SQLAlchemy.
-O sistema foi projetado com foco em organização modular, separação de responsabilidades e integração com banco de dados relacional.
+**Aplicação desktop para gerenciamento completo de uma loja de componentes de hardware.**  
+Interface gráfica moderna em tema escuro, construída com Python e CustomTkinter.
 
-🚀 Funcionalidades\n
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![CustomTkinter](https://img.shields.io/badge/CustomTkinter-5.2.2-7F77DD?style=flat-square)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.48-D71F00?style=flat-square)
+![SQLite](https://img.shields.io/badge/SQLite-embutido-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Werkzeug](https://img.shields.io/badge/Werkzeug-3.0.1-FF6600?style=flat-square)
+![License](https://img.shields.io/badge/licença-MIT-22C55E?style=flat-square)
 
-📦 Gestão de Produtos (Estoque)
-Cadastrar mercadorias
-Listar produtos disponíveis no estoque
-Atualizar informações de produtos
-Excluir produtos do estoque
+</div>
 
-🛍️ Carrinho de Compras
-Adicionar produtos ao carrinho
-Remover produtos do carrinho
-Visualizar itens adicionados
-Calcular valor total da compra
+## Visão geral
 
-💳 Pagamento\n
-Simulação de pagamento
-Finalização da compra
-Atualização automática do estoque após pagamento
+O HardWave é um sistema de ponto de venda (PDV) desktop para lojas de hardware. Ele reúne catálogo de produtos, carrinho de compras, processamento de pagamentos e painel administrativo em uma única aplicação leve — sem necessidade de servidor externo ou conexão com internet.
 
-🗄️ Banco de Dados
-O arquivo de banco é database.db
-A conexão é feita em connection.py
-O SQLAlchemy é usado como ORM para gerenciar a persistência
+### Funcionalidades principais
 
-🧱 Tecnologias Utilizadas
-Python: linguagem principal do projeto.
-SQLAlchemy: usado como ORM para modelagem e persistência de dados.
-SQLite: banco de dados local, acessado via sqlite3 e SQLAlchemy.
-Biblioteca padrão do Python: para entrada/saída no terminal e lógica de menu.
+| Área | Recursos |
+|---|---|
+| **Catálogo** | Listagem por categoria, busca em tempo real, filtros por chips |
+| **Carrinho** | Adicionar / remover produtos, controle de quantidade, estoque atualizado em tempo real |
+| **Pagamento** | 5 métodos (Pix, Boleto, Crédito, Débito, Parcelado), descontos automáticos, parcelamento com juros configurável |
+| **Usuários** | Cadastro com CPF validado, autenticação por e-mail e senha, persistência do carrinho entre sessões |
+| **Admin** | Cadastrar / remover / editar produtos, configurar descontos e parcelamento, gerenciar administradores |
 
-Interface visual
+
+## Tecnologias
+
+### Linguagem e runtime
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| [Python](https://www.python.org/) | 3.10+ | Linguagem principal |
+
+### Interface gráfica
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) | 5.2.2 | Widgets modernos sobre Tkinter — tema escuro nativo |
+| [darkdetect](https://github.com/albertosottile/darkdetect) | 0.8.0 | Detecção de tema do sistema operacional |
+
+### Banco de dados e ORM
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| [SQLAlchemy](https://www.sqlalchemy.org/) | 2.0.48 | ORM declarativo, gerenciamento de sessões e migrations |
+| [SQLite](https://www.sqlite.org/) | embutido no Python | Banco de dados local — arquivo `app/database/database.db` |
+| [greenlet](https://greenlet.readthedocs.io/) | 3.3.2 | Dependência interna do SQLAlchemy (concorrência) |
+
+### Segurança
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| [Werkzeug](https://werkzeug.palletsprojects.com/) | 3.0.1 | Hash de senhas (PBKDF2-SHA256) — `generate_password_hash` / `check_password_hash` |
+
+### Utilitários
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| [packaging](https://packaging.pypa.io/) | 26.0 | Gerenciamento de versões de dependências |
+| [MarkupSafe](https://markupsafe.palletsprojects.com/) | 3.0.3 | Dependência do Werkzeug |
+
+
+## Pré-requisitos
+
+- **Python 3.10 ou superior** — [download](https://www.python.org/downloads/)
+- **pip** — já incluso no Python 3.4+
+- Sistema operacional: Windows 10+, macOS 11+ ou Linux (Ubuntu 20.04+)
+
+> **Não é necessário** instalar banco de dados, servidor ou qualquer dependência de sistema. O SQLite é embutido no Python.
+
+## Instalação e execução
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/sistema-de-loja.git
+cd sistema-de-loja
+```
+
+### 2. Crie um ambiente virtual
+
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Instale as dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Execute o sistema
+
+```bash
+python main.py
+```
+
+O banco de dados (`database.db`) e os arquivos de configuração (`descontos.json`, `parcelas.json`) serão criados automaticamente na primeira execução.
+
+## Primeiro acesso
+
+Na primeira execução, o sistema cria automaticamente:
+
+- **8 categorias** de produtos (Processadores, Placas de Vídeo, Memórias RAM, Air Coolers, Water Coolers, Armazenamento, Fontes de Alimentação, Gabinetes)
+- **8 produtos padrão** para demonstração
+- **Administrador padrão** com as credenciais abaixo
+
+```
+Usuário: admin
+Senha:   admin123
+```
+
+> ⚠️ **Importante:** altere a senha padrão do admin antes de usar o sistema em produção. Acesse o painel **Configurações → Administradores → Novo admin** para criar um acesso próprio, ou edite diretamente pelo painel admin.
+
+
+## Guia rápido de uso
+
+### Como cliente
+
+1. Abra o sistema — o catálogo de produtos é exibido automaticamente
+2. Use os **filtros de categoria** ou a **barra de busca** para encontrar produtos
+3. Clique em **"+ Adicionar ao carrinho"** em qualquer produto
+4. Acompanhe o carrinho no painel direito — ajuste quantidades com os botões `+` e `−`
+5. Selecione o **método de pagamento** (Pix tem 10% de desconto, Boleto 5%)
+6. Clique em **"Finalizar compra"** para ver o resumo do pedido
+
+### Como administrador
+
+1. Clique em **"Admin"** no rodapé da sidebar
+2. Entre com as credenciais de administrador
+3. Com o modo admin ativo, novos controles aparecem:
+   - Botão **"+ Novo produto"** na barra superior
+   - Botões **"Editar preço"** e **"Remover"** em cada card de produto
+   - Seções **Produtos**, **Usuários** e **Configurações** na sidebar
+
+### Métodos de pagamento e descontos padrão
+
+| Método | Desconto | Parcelamento |
+|---|---|---|
+| Pix | 10% | Não |
+| Boleto | 5% | Não |
+| Cartão de Débito | 0% | Não |
+| Cartão de Crédito | 0% | Até 12× (3× sem juros, 2% a.m. após) |
+| Parcelado | 0% | Até 12× (3× sem juros, 2% a.m. após) |
+
+> Os descontos e regras de parcelamento são **totalmente configuráveis** pelo painel admin em **Configurações**.
+
+## Dependências completas (`requirements.txt`)
+
+```
+SQLAlchemy==2.0.48
+Werkzeug==3.0.1
 customtkinter
+```
 
-⚙️ Instalação e Configuração
-1. Clonar o repositório
-   git clone
-2. Criar ambiente virtual
-   Python -m venv .venv
-3. Ativar ambiente virtual
-  Windows:
-  .venv\Scripts\activate
-  Linux/Mac:
-  source .venv/bin/activate
-4. Instalar dependências
-  pip install -r requirements.txt
+Para instalar manualmente uma dependência específica:
+
+```bash
+pip install SQLAlchemy==2.0.48
+pip install Werkzeug==3.0.1
+pip install customtkinter
+```
+
+---
+
+## Variáveis de configuração
+
+Não há arquivo `.env`. Todas as configurações estão nos arquivos JSON dentro de `app/database/`:
+
+**`descontos.json`** — editável pelo painel admin ou manualmente:
+```json
+{
+  "Cartao de Credito": 0.0,
+  "Cartao de Debito": 0.0,
+  "Parcelado": 0.0,
+  "Boleto": 0.05,
+  "Pix": 0.10
+}
+```
+
+**`parcelas.json`** — editável pelo painel admin ou manualmente:
+```json
+{
+  "max_parcelas": 12,
+  "sem_juros_ate": 3,
+  "tipo_taxa": "juros",
+  "taxa_mensal": 0.02
+}
+```
+
+## Solução de problemas
+
+**`ModuleNotFoundError: No module named 'customtkinter'`**
+```bash
+pip install customtkinter
+```
+
+**`ModuleNotFoundError: No module named 'sqlalchemy'`**
+```bash
+pip install SQLAlchemy==2.0.48
+```
+
+**A janela não abre no Linux (erro de display)**
+```bash
+sudo apt-get install python3-tk
+```
+
+**O banco de dados corrompeu ou quero resetar tudo**
+```bash
+rm app/database/database.db
+rm app/database/descontos.json
+rm app/database/parcelas.json
+python main.py
+```
+
+**Erro de permissão ao criar o banco no Windows**  
+Execute o terminal como administrador ou mova o projeto para uma pasta sem restrições (ex.: `C:\Users\SeuNome\Projetos\`).
+
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+
+<div align="center">
+  Desenvolvido com Python · CustomTkinter · SQLAlchemy · SQLite
+</div>

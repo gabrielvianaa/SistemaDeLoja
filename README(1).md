@@ -157,6 +157,99 @@ Senha:   admin123
 
 > Os descontos e regras de parcelamento são **totalmente configuráveis** pelo painel admin em **Configurações**.
 
+
+## Interface e Design
+
+### Protótipos das telas
+
+O diagrama abaixo apresenta os protótipos de alta fidelidade das principais telas do sistema, com a paleta de cores, componentes e layout exatos da implementação.
+
+![Protótipos das telas do Hardware Commerce](docs/prototipos/telas-hardware-commerce.svg)
+
+> As telas representadas: **Boas-vindas · Catálogo (visitante e logado) · Carrinho · Dados do Cartão · Login · Cadastro · Resumo do Pedido · Painel Admin** (Cadastrar Mercadoria, Configurar Descontos, Listar Usuários, Configurar Parcelamento).
+
+---
+
+### Fluxo do usuário (User Flow)
+
+O diagrama abaixo ilustra a navegação completa do sistema — fluxo do cliente, fluxo do administrador, validações e estados de erro.
+
+![Fluxo do usuário do Hardware Commerce](docs/userflow/user-flow.svg)
+
+---
+
+### Documentação de interface e design system
+
+A documentação detalhada de interface e o guia de estilo estão disponíveis em:
+
+| Documento | Descrição |
+|---|---|
+| [`docs/documentacao/documentacao-interfaces.md`](docs/documentacao/documentacao-interfaces.md) | Identificação das 16 telas, funcionalidades, regras de navegação e padrões de usabilidade |
+| [`docs/guia-estilo/design-system.md`](docs/guia-estilo/design-system.md) | Paleta de cores (tokens), tipografia, componentes, espaçamentos, animações e estados de interface |
+
+#### Telas do sistema
+
+| ID | Tela | Acesso |
+|---|---|---|
+| T01 | Boas-vindas | Público |
+| T02 | Catálogo de Produtos (Visitante) | Público |
+| T02A | Catálogo de Produtos (Logado) | Usuário autenticado |
+| T03 | Carrinho de Compras | Usuário autenticado |
+| T04 | Dados do Cartão / Parcelamento | Usuário autenticado |
+| T05 | Login de Usuário | Público |
+| T06 | Cadastro de Usuário | Público |
+| T07 | Resumo do Pedido | Usuário autenticado |
+| T08 | Login Admin | Público |
+| T09–T16 | Painel Administrativo (8 telas) | Admin autenticado |
+
+#### Paleta de cores principal
+
+| Uso | Cor | Token |
+|---|---|---|
+| Fundo principal | `#1e1d2e` | `bg-primary` |
+| Sidebar / footer | `#2c2a40` | `bg-secondary` |
+| Ação primária | `#860029` | `accent-primary` |
+| Sucesso / preços | `#6ee7b7` | `accent-success` |
+| Erro / estoque baixo | `#f87171` | `accent-error` |
+| Desconto / destaque | `#fbbf24` | `accent-warning` |
+| Usuário logado | `#a5b4fc` | `accent-info` |
+
+
+## Estrutura do projeto
+
+```
+SistemaDeLoja/
+├── main.py                          # Entry point — inicializa banco e loop principal
+├── requirements.txt
+├── docs/                            # Documentação de interface
+│   ├── prototipos/
+│   │   └── telas-hardware-commerce.svg   # Protótipos de alta fidelidade
+│   ├── userflow/
+│   │   └── user-flow.svg                 # Diagrama de fluxo do usuário
+│   ├── documentacao/
+│   │   └── documentacao-interfaces.md    # Documentação completa de interface
+│   └── guia-estilo/
+│       └── design-system.md              # Guia de estilo / Design System
+└── app/
+    ├── core/
+    │   └── carrinho.py              # Camada de Domínio — classe Carrinho e Pedido
+    ├── database/
+    │   ├── models.py                # ORM: Categoria, Produto, Admin, Usuario, CarrinhoItem
+    │   ├── connection.py            # Engine SQLAlchemy + SessionLocal
+    │   ├── database.db              # SQLite — gerado em runtime
+    │   ├── descontos.json           # Configuração de descontos por método
+    │   └── parcelas.json            # Configuração de parcelamento
+    ├── services/
+    │   ├── produto_service.py       # CRUD de produtos e categorias
+    │   ├── carrinho_service.py      # Lógica de adição ao carrinho
+    │   ├── usuario_service.py       # Cadastro, login e persistência de carrinho
+    │   ├── admin_service.py         # Autenticação e gestão de admins
+    │   └── pagamento_service.py     # Descontos, parcelamento e pedidos
+    └── ui/
+        └── app.py                   # Controlador de menus e interface gráfica
+```
+
+
 ## Dependências completas (`requirements.txt`)
 
 ```

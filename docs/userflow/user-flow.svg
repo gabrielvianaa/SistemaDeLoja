@@ -1,0 +1,361 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1400" width="2200" height="1400">
+  <title>Hardware Commerce — User Flow</title>
+  <desc>Fluxo do usuário completo do sistema Hardware Commerce</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: Arial, sans-serif; }
+      .bg { fill: #13121f; }
+      .node-start { fill: #3b3860; stroke: #7f7caa; stroke-width: 1; }
+      .node-client { fill: #1a3040; stroke: #378add; stroke-width: 1; }
+      .node-admin { fill: #1c3020; stroke: #639922; stroke-width: 1; }
+      .node-action { fill: #2c2a40; stroke: #575267; stroke-width: 0.8; }
+      .node-error { fill: #3b1515; stroke: #f87171; stroke-width: 0.8; }
+      .node-success { fill: #1a3628; stroke: #6ee7b7; stroke-width: 1; }
+      .node-decision { fill: #2a2010; stroke: #fbbf24; stroke-width: 1; }
+      .arr-client { stroke: #378add; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+      .arr-admin { stroke: #639922; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+      .arr-neutral { stroke: #575267; stroke-width: 1.2; fill: none; marker-end: url(#arr); }
+      .arr-error { stroke: #f87171; stroke-width: 1; fill: none; marker-end: url(#arr); stroke-dasharray: 4 3; }
+      .arr-success { stroke: #6ee7b7; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+
+      .t-h { font-size: 13px; font-weight: bold; fill: #f3f4f6; }
+      .t-s { font-size: 11px; fill: #b0adc8; }
+      .t-err { font-size: 11px; fill: #f87171; }
+      .t-ok { font-size: 11px; fill: #6ee7b7; }
+      .t-warn { font-size: 11px; fill: #fbbf24; }
+      .t-arr { font-size: 10px; fill: #8d8980; }
+      .t-label { font-size: 16px; font-weight: bold; fill: #a5b4fc; }
+      .t-section { font-size: 12px; font-weight: bold; fill: #575267; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2200" height="1400" class="bg"/>
+
+  <!-- Title -->
+  <text x="1100" y="44" text-anchor="middle" font-family="Arial" font-size="22" font-weight="bold" fill="#f3f4f6">Hardware Commerce — User Flow</text>
+  <text x="1100" y="66" text-anchor="middle" font-family="Arial" font-size="13" fill="#706e78">Versão 2.0 — Maio/2026</text>
+
+  <!-- LEGEND -->
+  <rect x="1700" y="85" width="460" height="160" rx="8" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+  <text x="1720" y="108" class="t-label">Legenda</text>
+  <rect x="1720" y="118" width="16" height="12" rx="2" class="node-client"/>
+  <text x="1742" y="129" class="t-s">Tela / Ação do cliente</text>
+  <rect x="1720" y="136" width="16" height="12" rx="2" class="node-admin"/>
+  <text x="1742" y="147" class="t-s">Tela / Ação do admin</text>
+  <rect x="1720" y="154" width="16" height="12" rx="2" class="node-decision"/>
+  <text x="1742" y="165" class="t-s">Decisão / Validação</text>
+  <rect x="1720" y="172" width="16" height="12" rx="2" class="node-success"/>
+  <text x="1742" y="183" class="t-s">Estado de sucesso</text>
+  <line x1="1720" y1="196" x2="1746" y2="196" stroke="#378add" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="1754" y="200" class="t-s">Fluxo do cliente</text>
+  <line x1="1870" y1="196" x2="1896" y2="196" stroke="#639922" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="1904" y="200" class="t-s">Fluxo do admin</text>
+  <line x1="1720" y1="214" x2="1746" y2="214" stroke="#f87171" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="1754" y="218" class="t-s">Erro / Validação falha</text>
+
+  <!-- ============================================================= -->
+  <!-- START -->
+  <!-- ============================================================= -->
+  <rect x="480" y="90" width="160" height="44" rx="22" class="node-start"/>
+  <text x="560" y="117" text-anchor="middle" class="t-h">INICIALIZAÇÃO</text>
+
+  <!-- Arrow down to T01 -->
+  <line x1="560" y1="134" x2="560" y2="164" class="arr-neutral"/>
+
+  <!-- T01: Boas-vindas -->
+  <rect x="460" y="164" width="200" height="56" rx="8" class="node-action"/>
+  <text x="560" y="188" text-anchor="middle" class="t-h">T01</text>
+  <text x="560" y="206" text-anchor="middle" class="t-s">Tela de Boas-vindas</text>
+
+  <!-- ============================================================= -->
+  <!-- FLUXO CLIENTE (lado esquerdo)  -->
+  <!-- ============================================================= -->
+  <text x="80" y="290" class="t-section">── FLUXO VISITANTE / CLIENTE ──────────────────────</text>
+
+  <!-- T01 → Listar Produtos (visitante) -->
+  <line x1="460" y1="192" x2="310" y2="192" class="arr-client"/>
+  <text x="385" y="186" text-anchor="middle" class="t-arr">Listar Produtos</text>
+
+  <rect x="130" y="174" width="178" height="56" rx="8" class="node-client"/>
+  <text x="219" y="198" text-anchor="middle" class="t-h">T02</text>
+  <text x="219" y="216" text-anchor="middle" class="t-s">Catálogo (Visitante)</text>
+  <text x="219" y="232" text-anchor="middle" font-size="10" fill="#378add">somente leitura</text>
+
+  <!-- T01 → Cadastrar-se -->
+  <line x1="560" y1="220" x2="560" y2="290" class="arr-neutral"/>
+  <text x="572" y="260" class="t-arr">menu</text>
+
+  <!-- Branch: Cadastro e Login -->
+  <rect x="40" y="290" width="160" height="50" rx="8" class="node-client"/>
+  <text x="120" y="312" text-anchor="middle" class="t-h">T06</text>
+  <text x="120" y="328" text-anchor="middle" class="t-s">Cadastro de Usuário</text>
+
+  <rect x="240" y="290" width="160" height="50" rx="8" class="node-client"/>
+  <text x="320" y="312" text-anchor="middle" class="t-h">T05</text>
+  <text x="320" y="328" text-anchor="middle" class="t-s">Login de Usuário</text>
+
+  <!-- T01 spreads to T06 and T05 -->
+  <path d="M 500 290 L 200 290 L 200 315 L 200 315" class="arr-client"/>
+  <text x="350" y="283" class="t-arr">Cadastrar-se</text>
+  <path d="M 500 290 L 400 290 L 400 315" class="arr-client"/>
+  <text x="410" y="283" class="t-arr">Login</text>
+
+  <!-- Validation: T06 -->
+  <rect x="40" y="360" width="160" height="40" rx="6" class="node-decision"/>
+  <text x="120" y="376" text-anchor="middle" class="t-h">Dados válidos?</text>
+  <text x="120" y="390" text-anchor="middle" class="t-s">CPF, email, senha ≥6</text>
+  <line x1="120" y1="340" x2="120" y2="360" class="arr-client"/>
+  <!-- Yes -->
+  <line x1="120" y1="400" x2="120" y2="430" class="arr-success"/>
+  <text x="130" y="422" class="t-ok">OK</text>
+  <!-- No: self loop -->
+  <path d="M 40 380 Q 10 380 10 340 Q 10 300 40 310" stroke="#f87171" stroke-width="1" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="14" y="345" class="t-err" font-size="10">erro</text>
+
+  <!-- Validation: T05 -->
+  <rect x="240" y="360" width="160" height="40" rx="6" class="node-decision"/>
+  <text x="320" y="376" text-anchor="middle" class="t-h">Credenciais OK?</text>
+  <text x="320" y="390" text-anchor="middle" class="t-s">email + senha hash</text>
+  <line x1="320" y1="340" x2="320" y2="360" class="arr-client"/>
+  <line x1="320" y1="400" x2="320" y2="430" class="arr-success"/>
+  <text x="330" y="422" class="t-ok">OK</text>
+  <path d="M 240 380 Q 210 380 210 340 Q 210 300 240 310" stroke="#f87171" stroke-width="1" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="214" y="345" class="t-err" font-size="10">erro</text>
+
+  <!-- T01 (logado) -->
+  <rect x="120" y="430" width="260" height="50" rx="8" class="node-success"/>
+  <text x="250" y="452" text-anchor="middle" class="t-h">Logado como Usuário</text>
+  <text x="250" y="468" text-anchor="middle" class="t-s">Carrinho persistido carregado</text>
+  <line x1="120" y1="400" x2="130" y2="430" class="arr-success"/>
+  <line x1="320" y1="400" x2="370" y2="430" class="arr-success"/>
+
+  <!-- T02A: Catálogo logado -->
+  <rect x="40" y="510" width="200" height="56" rx="8" class="node-client"/>
+  <text x="140" y="534" text-anchor="middle" class="t-h">T02A</text>
+  <text x="140" y="552" text-anchor="middle" class="t-s">Catálogo (Logado)</text>
+  <line x1="180" y1="480" x2="140" y2="510" class="arr-client"/>
+  <text x="120" y="500" class="t-arr">Listar Produtos</text>
+
+  <!-- Adicionar ao Carrinho decision -->
+  <rect x="260" y="510" width="160" height="50" rx="8" class="node-decision"/>
+  <text x="340" y="530" text-anchor="middle" class="t-h">Estoque OK?</text>
+  <text x="340" y="546" text-anchor="middle" class="t-s">valida quantidade</text>
+  <line x1="200" y1="538" x2="260" y2="535" class="arr-client"/>
+  <text x="230" y="528" class="t-arr">Adicionar</text>
+
+  <!-- T03: Carrinho -->
+  <rect x="440" y="510" width="200" height="56" rx="8" class="node-client"/>
+  <text x="540" y="534" text-anchor="middle" class="t-h">T03</text>
+  <text x="540" y="552" text-anchor="middle" class="t-s">Carrinho de Compras</text>
+  <line x1="420" y1="535" x2="440" y2="534" class="arr-success"/>
+  <text x="425" y="528" class="t-ok" font-size="10">OK</text>
+  <path d="M 260 530 Q 230 530 230 510 Q 230 490 260 500" stroke="#f87171" stroke-width="1" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="200" y="505" class="t-err" font-size="10">sem estoque</text>
+
+  <!-- Remover item -->
+  <rect x="440" y="590" width="200" height="44" rx="8" class="node-action"/>
+  <text x="540" y="608" text-anchor="middle" class="t-h">Remover item</text>
+  <text x="540" y="624" text-anchor="middle" class="t-s">estoque restaurado</text>
+  <line x1="540" y1="566" x2="540" y2="590" class="arr-neutral"/>
+
+  <!-- Selecionar método -->
+  <rect x="660" y="510" width="200" height="56" rx="8" class="node-decision"/>
+  <text x="760" y="530" text-anchor="middle" class="t-h">Método de Pagamento</text>
+  <text x="760" y="546" text-anchor="middle" class="t-s">seleciona no ComboBox</text>
+  <line x1="640" y1="535" x2="660" y2="535" class="arr-client"/>
+  <text x="645" y="528" class="t-arr">Finalizar</text>
+
+  <!-- Branch by method -->
+  <rect x="560" y="620" width="200" height="50" rx="8" class="node-client"/>
+  <text x="660" y="640" text-anchor="middle" class="t-h">T04</text>
+  <text x="660" y="656" text-anchor="middle" class="t-s">Dados do Cartão</text>
+  <path d="M 700 566 L 660 620" class="arr-client"/>
+  <text x="660" y="600" class="t-arr">Cartão/Parcelado</text>
+
+  <rect x="780" y="620" width="200" height="50" rx="8" class="node-client"/>
+  <text x="880" y="640" text-anchor="middle" class="t-h">Pagamento Direto</text>
+  <text x="880" y="656" text-anchor="middle" class="t-s">Pix / Boleto / Débito</text>
+  <path d="M 820 566 L 880 620" class="arr-client"/>
+  <text x="850" y="600" class="t-arr">Outros</text>
+
+  <!-- Validate card -->
+  <rect x="560" y="690" width="200" height="44" rx="8" class="node-decision"/>
+  <text x="660" y="708" text-anchor="middle" class="t-h">Formulário válido?</text>
+  <text x="660" y="722" text-anchor="middle" class="t-s">16 dígitos, MM/AA, CVV</text>
+  <line x1="660" y1="670" x2="660" y2="690" class="arr-client"/>
+  <path d="M 560 712 Q 530 712 530 670 Q 530 640 560 650" stroke="#f87171" stroke-width="1" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="490" y="662" class="t-err" font-size="10">inválido</text>
+
+  <!-- T07: Sucesso -->
+  <rect x="620" y="760" width="280" height="56" rx="8" class="node-success"/>
+  <text x="760" y="784" text-anchor="middle" class="t-h">T07 — Compra Finalizada</text>
+  <text x="760" y="800" text-anchor="middle" class="t-s">Resumo • Desconto • Parcelas</text>
+  <line x1="660" y1="734" x2="700" y2="760" class="arr-success"/>
+  <text x="665" y="752" class="t-ok">OK</text>
+  <line x1="880" y1="670" x2="800" y2="760" class="arr-success"/>
+
+  <!-- Back to T01 -->
+  <path d="M 760 816 Q 760 860 560 860 Q 460 860 460 880 L 560 880 L 560 242" stroke="#6ee7b7" stroke-width="1" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <text x="680" y="875" class="t-ok" font-size="10">Voltar ao início</text>
+
+  <!-- ============================================================= -->
+  <!-- FLUXO ADMIN (lado direito) -->
+  <!-- ============================================================= -->
+  <text x="1060" y="290" class="t-section">── FLUXO ADMINISTRADOR ─────────────────────────────────────────</text>
+
+  <!-- T08: Login Admin -->
+  <rect x="1060" y="164" width="200" height="56" rx="8" class="node-admin"/>
+  <text x="1160" y="188" text-anchor="middle" class="t-h">T08</text>
+  <text x="1160" y="206" text-anchor="middle" class="t-s">Login Admin</text>
+  <line x1="660" y1="192" x2="1060" y2="192" class="arr-admin"/>
+  <text x="860" y="185" class="t-arr">Login Admin (sidebar)</text>
+
+  <!-- Validate admin -->
+  <rect x="1060" y="250" width="200" height="44" rx="6" class="node-decision"/>
+  <text x="1160" y="268" text-anchor="middle" class="t-h">Credenciais Admin?</text>
+  <text x="1160" y="282" text-anchor="middle" class="t-s">username + senha hash</text>
+  <line x1="1160" y1="220" x2="1160" y2="250" class="arr-admin"/>
+  <path d="M 1060 272 Q 1030 272 1030 230 Q 1030 192 1060 204" stroke="#f87171" stroke-width="1" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="1005" y="218" class="t-err" font-size="10">inválido</text>
+
+  <!-- Admin logado -->
+  <rect x="1060" y="316" width="200" height="44" rx="8" class="node-success"/>
+  <text x="1160" y="334" text-anchor="middle" class="t-h">Admin Autenticado</text>
+  <text x="1160" y="350" text-anchor="middle" class="t-s">Sidebar ADMIN habilitada</text>
+  <line x1="1160" y1="294" x2="1160" y2="316" class="arr-admin"/>
+
+  <!-- Admin options (6 boxes) -->
+  <line x1="1160" y1="360" x2="1160" y2="390" class="arr-admin"/>
+  <path d="M 1160 390 L 1080 390 L 1080 418" class="arr-admin"/>
+  <path d="M 1160 390 L 1260 390 L 1260 418" class="arr-admin"/>
+  <path d="M 1160 390 L 1440 390 L 1440 418" class="arr-admin"/>
+  <path d="M 1160 390 L 1640 390 L 1640 418" class="arr-admin"/>
+  <path d="M 1160 390 L 1840 390 L 1840 418" class="arr-admin"/>
+  <path d="M 1160 390 L 2040 390 L 2040 418" class="arr-admin"/>
+
+  <!-- T09: Cadastrar Produto -->
+  <rect x="1000" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="1080" y="440" text-anchor="middle" class="t-h">T09</text>
+  <text x="1080" y="456" text-anchor="middle" class="t-s">Cadastrar Mercadoria</text>
+
+  <!-- T10: Retirar Produto -->
+  <rect x="1180" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="1260" y="440" text-anchor="middle" class="t-h">T10</text>
+  <text x="1260" y="456" text-anchor="middle" class="t-s">Retirar Mercadoria</text>
+
+  <!-- T11: Alterar Preco -->
+  <rect x="1360" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="1440" y="440" text-anchor="middle" class="t-h">T11</text>
+  <text x="1440" y="456" text-anchor="middle" class="t-s">Alterar Preço</text>
+
+  <!-- T12+T13: Admin management -->
+  <rect x="1560" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="1640" y="440" text-anchor="middle" class="t-h">T12 / T13</text>
+  <text x="1640" y="456" text-anchor="middle" class="t-s">Criar / Listar Admins</text>
+
+  <!-- T14: Listar Usuarios -->
+  <rect x="1760" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="1840" y="440" text-anchor="middle" class="t-h">T14</text>
+  <text x="1840" y="456" text-anchor="middle" class="t-s">Listar Usuários</text>
+
+  <!-- T15+T16: Config -->
+  <rect x="1960" y="418" width="160" height="56" rx="8" class="node-admin"/>
+  <text x="2040" y="440" text-anchor="middle" class="t-h">T15 / T16</text>
+  <text x="2040" y="456" text-anchor="middle" class="t-s">Descontos / Parcelas</text>
+
+  <!-- Validate each admin action -->
+  <rect x="1000" y="500" width="160" height="36" rx="6" class="node-decision"/>
+  <text x="1080" y="514" text-anchor="middle" class="t-h">Dados válidos?</text>
+  <text x="1080" y="528" text-anchor="middle" class="t-s">categoria + nome + preço</text>
+  <line x1="1080" y1="474" x2="1080" y2="500" class="arr-admin"/>
+
+  <rect x="1180" y="500" width="160" height="36" rx="6" class="node-decision"/>
+  <text x="1260" y="514" text-anchor="middle" class="t-h">Produto existe?</text>
+  <text x="1260" y="528" text-anchor="middle" class="t-s">busca por ID</text>
+  <line x1="1260" y1="474" x2="1260" y2="500" class="arr-admin"/>
+
+  <rect x="1360" y="500" width="160" height="36" rx="6" class="node-decision"/>
+  <text x="1440" y="514" text-anchor="middle" class="t-h">Preço válido?</text>
+  <text x="1440" y="528" text-anchor="middle" class="t-s">float positivo</text>
+  <line x1="1440" y1="474" x2="1440" y2="500" class="arr-admin"/>
+
+  <rect x="1560" y="500" width="160" height="36" rx="6" class="node-decision"/>
+  <text x="1640" y="514" text-anchor="middle" class="t-h">Username único?</text>
+  <text x="1640" y="528" text-anchor="middle" class="t-s">unique constraint</text>
+  <line x1="1640" y1="474" x2="1640" y2="500" class="arr-admin"/>
+
+  <rect x="1960" y="500" width="160" height="36" rx="6" class="node-decision"/>
+  <text x="2040" y="514" text-anchor="middle" class="t-h">Intervalo válido?</text>
+  <text x="2040" y="528" text-anchor="middle" class="t-s">0-100% / 1-24 parc.</text>
+  <line x1="2040" y1="474" x2="2040" y2="500" class="arr-admin"/>
+
+  <!-- Success boxes for admin actions -->
+  <rect x="1000" y="562" width="160" height="36" rx="8" class="node-success"/>
+  <text x="1080" y="576" text-anchor="middle" class="t-h">Produto salvo</text>
+  <text x="1080" y="590" text-anchor="middle" class="t-s">BD atualizado</text>
+  <line x1="1080" y1="536" x2="1080" y2="562" class="arr-success"/>
+
+  <rect x="1180" y="562" width="160" height="36" rx="8" class="node-success"/>
+  <text x="1260" y="576" text-anchor="middle" class="t-h">Produto removido</text>
+  <text x="1260" y="590" text-anchor="middle" class="t-s">BD atualizado</text>
+  <line x1="1260" y1="536" x2="1260" y2="562" class="arr-success"/>
+
+  <rect x="1360" y="562" width="160" height="36" rx="8" class="node-success"/>
+  <text x="1440" y="576" text-anchor="middle" class="t-h">Preço atualizado</text>
+  <text x="1440" y="590" text-anchor="middle" class="t-s">BD atualizado</text>
+  <line x1="1440" y1="536" x2="1440" y2="562" class="arr-success"/>
+
+  <rect x="1560" y="562" width="160" height="36" rx="8" class="node-success"/>
+  <text x="1640" y="576" text-anchor="middle" class="t-h">Admin criado</text>
+  <text x="1640" y="590" text-anchor="middle" class="t-s">senha hasheada</text>
+  <line x1="1640" y1="536" x2="1640" y2="562" class="arr-success"/>
+
+  <rect x="1960" y="562" width="160" height="36" rx="8" class="node-success"/>
+  <text x="2040" y="576" text-anchor="middle" class="t-h">Config salva</text>
+  <text x="2040" y="590" text-anchor="middle" class="t-s">JSON persistido</text>
+  <line x1="2040" y1="536" x2="2040" y2="562" class="arr-success"/>
+
+  <!-- All admin actions return to T01 -->
+  <path d="M 1080 598 L 1080 640 Q 1080 660 1160 660 L 1160 700" stroke="#639922" stroke-width="0.8" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <path d="M 1260 598 L 1260 660 L 1160 660" stroke="#639922" stroke-width="0.8" fill="none" stroke-dasharray="5 3"/>
+  <path d="M 1440 598 L 1440 660 L 1160 660" stroke="#639922" stroke-width="0.8" fill="none" stroke-dasharray="5 3"/>
+  <path d="M 1640 598 L 1640 660 L 1160 660" stroke="#639922" stroke-width="0.8" fill="none" stroke-dasharray="5 3"/>
+  <path d="M 2040 598 L 2040 660 L 1160 660" stroke="#639922" stroke-width="0.8" fill="none" stroke-dasharray="5 3"/>
+
+  <rect x="1060" y="700" width="200" height="44" rx="8" class="node-action"/>
+  <text x="1160" y="720" text-anchor="middle" class="t-h">Retorna ao</text>
+  <text x="1160" y="736" text-anchor="middle" class="t-s">T01 — Boas-vindas</text>
+
+  <!-- Logout admin -->
+  <rect x="1060" y="770" width="200" height="36" rx="6" class="node-action"/>
+  <text x="1160" y="786" text-anchor="middle" class="t-h">Logout Admin</text>
+  <text x="1160" y="802" text-anchor="middle" class="t-s">sidebar ADMIN removida</text>
+  <line x1="1160" y1="744" x2="1160" y2="770" class="arr-admin"/>
+  <line x1="1160" y1="806" x2="1160" y2="836" class="arr-neutral"/>
+
+  <!-- Back to start -->
+  <rect x="1060" y="836" width="200" height="36" rx="22" class="node-start"/>
+  <text x="1160" y="852" text-anchor="middle" class="t-h">T01</text>
+  <text x="1160" y="868" text-anchor="middle" class="t-s">Boas-vindas (visitante)</text>
+
+  <!-- ============================================================= -->
+  <!-- PERSISTENCE ANNOTATION -->
+  <!-- ============================================================= -->
+  <rect x="80" y="900" width="960" height="80" rx="8" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+  <text x="100" y="924" font-family="Arial" font-size="13" font-weight="bold" fill="#a5b4fc">Persistência de Dados</text>
+  <text x="100" y="944" font-family="Arial" font-size="11" fill="#b0adc8">• Carrinho (usuário logado): salvo em</text>
+  <text x="100" y="958" font-family="Arial" font-size="11" fill="#6ee7b7">   carrinho_itens</text>
+  <text x="225" y="958" font-family="Arial" font-size="11" fill="#b0adc8">no SQLite — recuperado automaticamente ao login</text>
+  <text x="100" y="972" font-family="Arial" font-size="11" fill="#b0adc8">• Descontos e Parcelamento: persistidos em</text>
+  <text x="100" y="958" font-family="Arial" font-size="11" fill="#6ee7b7">   descontos.json</text>
+  <text x="270" y="972" font-family="Arial" font-size="11" fill="#6ee7b7">descontos.json</text>
+  <text x="390" y="972" font-family="Arial" font-size="11" fill="#b0adc8">e</text>
+  <text x="404" y="972" font-family="Arial" font-size="11" fill="#6ee7b7">parcelas.json</text>
+
+  <!-- Footer -->
+  <text x="1100" y="1380" text-anchor="middle" font-family="Arial" font-size="11" fill="#575267">Hardware Commerce v2.0 — User Flow — Maio/2026</text>
+</svg>

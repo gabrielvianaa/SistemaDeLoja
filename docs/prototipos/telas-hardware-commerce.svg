@@ -1,0 +1,775 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3800 2800" width="3800" height="2800">
+  <title>Hardware Commerce — Protótipos de Interface</title>
+  <desc>Protótipos de alta fidelidade das principais telas do sistema Hardware Commerce</desc>
+
+  <defs>
+    <style>
+      .win-bg { fill: #1e1d2e; }
+      .sidebar-bg { fill: #2c2a40; }
+      .header-bg { fill: #1e1d2e; }
+      .footer-bg { fill: #2c2a40; }
+      .content-bg { fill: #1e1d2e; }
+      .table-bg { fill: #282636; }
+      .row-even { fill: #2e2c44; }
+      .row-odd { fill: #242238; }
+      .row-selected { fill: #67648a; }
+      .table-header-bg { fill: #575267; }
+      .card-bg { fill: #282636; }
+      .btn-primary { fill: #860029; }
+      .btn-danger-bg { fill: #3b1515; }
+      .btn-remove { fill: #7f1d1d; }
+      .btn-checkout { fill: #15803d; }
+      .btn-nav { fill: transparent; }
+      .divider { fill: #3f3d58; }
+
+      .t-primary { fill: #f3f4f6; }
+      .t-secondary { fill: #d1d5db; }
+      .t-muted { fill: #8d8980; }
+      .t-disabled { fill: #706e78; }
+      .t-category { fill: #b0adc8; }
+      .t-section { fill: #575267; }
+      .t-success { fill: #6ee7b7; }
+      .t-warning { fill: #fbbf24; }
+      .t-error { fill: #f87171; }
+      .t-info { fill: #a5b4fc; }
+      .t-white { fill: #ffffff; }
+
+      .border-sidebar { stroke: #3f3d58; stroke-width: 1; fill: none; }
+      .border-card { stroke: #3f3d58; stroke-width: 0.5; fill: none; }
+      .win-border { stroke: #3f3d58; stroke-width: 1.5; fill: none; }
+
+      text { font-family: Arial, sans-serif; }
+      .f-bold { font-weight: bold; }
+      .f-10 { font-size: 10px; }
+      .f-11 { font-size: 11px; }
+      .f-12 { font-size: 12px; }
+      .f-13 { font-size: 13px; }
+      .f-14 { font-size: 14px; }
+      .f-20 { font-size: 20px; }
+      .f-26 { font-size: 26px; }
+      .f-30 { font-size: 30px; }
+
+      .screen-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #a5b4fc; }
+    </style>
+  </defs>
+
+  <!-- ================================================================ -->
+  <!-- BACKGROUND -->
+  <rect width="3800" height="2800" fill="#13121f"/>
+
+  <!-- ================================================================ -->
+  <!-- TELA 1: BOAS-VINDAS  (col 0, row 0)  x=40  y=60 -->
+  <!-- ================================================================ -->
+  <text x="40" y="48" class="screen-label">T01 — Boas-vindas</text>
+  <g transform="translate(40,60)">
+    <!-- Window -->
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <!-- Header -->
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-muted">Visitante</text>
+    <!-- Sidebar -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <!-- Sidebar items -->
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="120" width="174" height="1" class="divider"/>
+    <text x="14" y="140" class="f-10 f-bold t-section">CONTA</text>
+    <rect x="8" y="146" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="167" class="f-13 t-info">Cadastrar-se</text>
+    <rect x="8" y="182" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="203" class="f-13 t-info">Fazer Login</text>
+    <rect x="8" y="224" width="174" height="1" class="divider"/>
+    <rect x="8" y="232" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="253" class="f-13 t-muted">Login Admin</text>
+    <rect x="8" y="272" width="174" height="1" class="divider"/>
+    <rect x="8" y="280" width="174" height="32" rx="6" class="btn-danger-bg" rx="6"/>
+    <text x="18" y="301" class="f-13 t-error">Sair</text>
+    <!-- Content: Welcome -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="505" y="230" text-anchor="middle" font-size="52">🛍️</text>
+    <text x="505" y="300" text-anchor="middle" class="f-30 f-bold" fill="#ccc9e0">Bem-vindo a Loja</text>
+    <text x="505" y="330" text-anchor="middle" class="f-13 t-disabled">Selecione uma opcao no menu lateral para comecar.</text>
+    <rect x="340" y="345" width="330" height="3" rx="1" fill="#860029"/>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 2: CATÁLOGO (VISITANTE)  (col 1, row 0)  x=900  y=60 -->
+  <!-- ================================================================ -->
+  <text x="900" y="48" class="screen-label">T02 — Catálogo de Produtos (Visitante)</text>
+  <g transform="translate(900,60)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <!-- Header -->
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-muted">Visitante</text>
+    <!-- Sidebar (same) -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="120" width="174" height="1" class="divider"/>
+    <text x="14" y="140" class="f-10 f-bold t-section">CONTA</text>
+    <rect x="8" y="146" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="167" class="f-13 t-info">Cadastrar-se</text>
+    <rect x="8" y="182" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="203" class="f-13 t-info">Fazer Login</text>
+    <rect x="8" y="224" width="174" height="1" class="divider"/>
+    <rect x="8" y="232" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="253" class="f-13 t-muted">Login Admin</text>
+    <rect x="8" y="272" width="174" height="1" class="divider"/>
+    <rect x="8" y="280" width="174" height="32" rx="6" class="btn-danger-bg"/>
+    <text x="18" y="301" class="f-13 t-error">Sair</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Produtos Disponiveis</text>
+    <!-- Table -->
+    <rect x="206" y="94" width="598" height="380" rx="8" class="table-bg"/>
+    <!-- Table Header -->
+    <rect x="210" y="98" width="590" height="30" rx="4" class="table-header-bg"/>
+    <text x="220" y="117" class="f-12 f-bold t-category">Nome</text>
+    <text x="455" y="117" class="f-12 f-bold t-category">Categoria</text>
+    <text x="590" y="117" class="f-12 f-bold t-category">Preco</text>
+    <text x="680" y="117" class="f-12 f-bold t-category">Estoque</text>
+    <!-- Row 1 -->
+    <rect x="210" y="130" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="148" class="f-12 t-primary">RTX 4090</text>
+    <text x="455" y="148" class="f-12 t-category">Placa de Video</text>
+    <text x="590" y="148" class="f-12 t-success">R$8.500,00</text>
+    <text x="680" y="148" class="f-12 t-secondary">12</text>
+    <!-- Row 2 -->
+    <rect x="210" y="160" width="590" height="28" rx="3" class="row-odd"/>
+    <text x="220" y="178" class="f-12 t-primary">Intel Core i9-14900K</text>
+    <text x="455" y="178" class="f-12 t-category">Processador</text>
+    <text x="590" y="178" class="f-12 t-success">R$3.200,00</text>
+    <text x="680" y="178" class="f-12 t-secondary">8</text>
+    <!-- Row 3 -->
+    <rect x="210" y="190" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="208" class="f-12 t-primary">Corsair 32GB DDR5</text>
+    <text x="455" y="208" class="f-12 t-category">Memoria RAM</text>
+    <text x="590" y="208" class="f-12 t-success">R$1.150,00</text>
+    <text x="680" y="208" class="f-12 t-secondary">25</text>
+    <!-- Row 4 -->
+    <rect x="210" y="220" width="590" height="28" rx="3" class="row-odd"/>
+    <text x="220" y="238" class="f-12 t-primary">Samsung 980 Pro 2TB</text>
+    <text x="455" y="238" class="f-12 t-category">SSD</text>
+    <text x="590" y="238" class="f-12 t-success">R$920,00</text>
+    <text x="680" y="238" class="f-12 t-secondary">3</text>
+    <text x="690" y="238" class="f-12 t-error">3</text>
+    <rect x="210" y="220" width="590" height="28" rx="3" class="row-odd"/>
+    <text x="220" y="238" class="f-12 t-primary">Samsung 980 Pro 2TB</text>
+    <text x="455" y="238" class="f-12 t-category">SSD</text>
+    <text x="590" y="238" class="f-12 t-success">R$920,00</text>
+    <text x="685" y="238" class="f-12 t-error">3 ⚠</text>
+    <!-- Row 5 -->
+    <rect x="210" y="250" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="268" class="f-12 t-primary">ASUS ROG B650E</text>
+    <text x="455" y="268" class="f-12 t-category">Placa-mae</text>
+    <text x="590" y="268" class="f-12 t-success">R$2.400,00</text>
+    <text x="680" y="268" class="f-12 t-secondary">6</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 3: CATÁLOGO (LOGADO)  (col 2, row 0)  x=1760  y=60 -->
+  <!-- ================================================================ -->
+  <text x="1760" y="48" class="screen-label">T02A — Catálogo de Produtos (Logado)</text>
+  <g transform="translate(1760,60)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-info">Joao Silva</text>
+    <!-- Sidebar logado -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="114" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="135" class="f-13 t-secondary">Ver Carrinho</text>
+    <rect x="8" y="156" width="174" height="1" class="divider"/>
+    <text x="14" y="176" class="f-10 f-bold t-section">CONTA</text>
+    <text x="18" y="198" class="f-12 f-bold t-success">Joao Silva</text>
+    <rect x="8" y="208" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="229" class="f-13 t-error">Logout</text>
+    <rect x="8" y="250" width="174" height="1" class="divider"/>
+    <rect x="8" y="258" width="174" height="32" rx="6" class="btn-danger-bg"/>
+    <text x="18" y="279" class="f-13 t-error">Sair</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Produtos Disponiveis</text>
+    <!-- Table -->
+    <rect x="206" y="94" width="598" height="310" rx="8" class="table-bg"/>
+    <rect x="210" y="98" width="590" height="30" rx="4" class="table-header-bg"/>
+    <text x="220" y="117" class="f-12 f-bold t-category">Nome</text>
+    <text x="435" y="117" class="f-12 f-bold t-category">Categoria</text>
+    <text x="560" y="117" class="f-12 f-bold t-category">Preco</text>
+    <text x="660" y="117" class="f-12 f-bold t-category">Estoque</text>
+    <!-- Rows -->
+    <rect x="210" y="130" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="148" class="f-12 t-primary">RTX 4090</text>
+    <text x="435" y="148" class="f-12 t-category">Placa de Video</text>
+    <text x="560" y="148" class="f-12 t-success">R$8.500,00</text>
+    <text x="660" y="148" class="f-12 t-secondary">12</text>
+    <!-- Row selected -->
+    <rect x="210" y="160" width="590" height="28" rx="3" class="row-selected"/>
+    <text x="220" y="178" class="f-12 t-primary">Intel Core i9-14900K</text>
+    <text x="435" y="178" class="f-12 t-category">Processador</text>
+    <text x="560" y="178" class="f-12 t-success">R$3.200,00</text>
+    <text x="660" y="178" class="f-12 t-secondary">8</text>
+    <rect x="210" y="190" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="208" class="f-12 t-primary">Corsair 32GB DDR5</text>
+    <text x="435" y="208" class="f-12 t-category">Memoria RAM</text>
+    <text x="560" y="208" class="f-12 t-success">R$1.150,00</text>
+    <text x="660" y="208" class="f-12 t-secondary">25</text>
+    <rect x="210" y="220" width="590" height="28" rx="3" class="row-odd"/>
+    <text x="220" y="238" class="f-12 t-primary">Samsung 980 Pro 2TB</text>
+    <text x="435" y="238" class="f-12 t-category">SSD</text>
+    <text x="560" y="238" class="f-12 t-success">R$920,00</text>
+    <text x="660" y="238" class="f-12 t-error">3</text>
+    <!-- Bottom bar -->
+    <rect x="206" y="408" width="598" height="50" rx="8" fill="#2c2a40"/>
+    <text x="218" y="438" class="f-13 t-secondary">Quantidade:</text>
+    <rect x="316" y="418" width="60" height="30" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="346" y="438" text-anchor="middle" class="f-12 t-secondary">1</text>
+    <text x="386" y="438" class="f-11 t-success">Disponivel: 8</text>
+    <rect x="640" y="418" width="158" height="30" rx="6" class="btn-primary"/>
+    <text x="719" y="438" text-anchor="middle" class="f-13 f-bold t-white">Adicionar ao Carrinho</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-success">1 item  |  Total: R$3.200,00</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 4: CARRINHO  (col 3, row 0)  x=2660 y=60 -->
+  <!-- ================================================================ -->
+  <text x="2660" y="48" class="screen-label">T03 — Carrinho de Compras</text>
+  <g transform="translate(2660,60)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-info">Joao Silva</text>
+    <!-- Sidebar -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="114" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="135" class="f-13 t-secondary">Ver Carrinho</text>
+    <rect x="8" y="156" width="174" height="1" class="divider"/>
+    <text x="18" y="186" class="f-12 f-bold t-success">Joao Silva</text>
+    <rect x="8" y="196" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="217" class="f-13 t-error">Logout</text>
+    <rect x="8" y="238" width="174" height="1" class="divider"/>
+    <rect x="8" y="246" width="174" height="32" rx="6" class="btn-danger-bg"/>
+    <text x="18" y="267" class="f-13 t-error">Sair</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Meu Carrinho</text>
+    <!-- Tabs -->
+    <rect x="206" y="90" width="598" height="36" rx="8" fill="#2c2a40"/>
+    <rect x="208" y="92" width="200" height="32" rx="6" fill="#860029"/>
+    <text x="308" y="113" text-anchor="middle" class="f-13 t-white">Itens do Carrinho</text>
+    <text x="510" y="113" text-anchor="middle" class="f-13 t-secondary">Adicionar Produtos</text>
+    <!-- Table -->
+    <rect x="206" y="130" width="598" height="200" rx="8" class="table-bg"/>
+    <rect x="210" y="134" width="590" height="28" rx="4" class="table-header-bg"/>
+    <text x="220" y="152" class="f-12 f-bold t-category">Nome</text>
+    <text x="380" y="152" class="f-12 f-bold t-category">Categoria</text>
+    <text x="490" y="152" class="f-12 f-bold t-category">Qtd</text>
+    <text x="540" y="152" class="f-12 f-bold t-category">Preco</text>
+    <text x="630" y="152" class="f-12 f-bold t-category">Subtotal</text>
+    <!-- Rows -->
+    <rect x="210" y="164" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="182" class="f-12 t-primary">Intel Core i9-14900K</text>
+    <text x="380" y="182" class="f-12 t-category">Processador</text>
+    <text x="490" y="182" class="f-12 t-secondary">1</text>
+    <text x="540" y="182" class="f-12 t-secondary">R$3.200,00</text>
+    <text x="630" y="182" class="f-12 t-success">R$3.200,00</text>
+    <!-- Row selected -->
+    <rect x="210" y="194" width="590" height="28" rx="3" class="row-selected"/>
+    <text x="220" y="212" class="f-12 t-primary">RTX 4090</text>
+    <text x="380" y="212" class="f-12 t-category">Placa de Video</text>
+    <text x="490" y="212" class="f-12 t-secondary">1</text>
+    <text x="540" y="212" class="f-12 t-secondary">R$8.500,00</text>
+    <text x="630" y="212" class="f-12 t-success">R$8.500,00</text>
+    <rect x="210" y="224" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="242" class="f-12 t-primary">Corsair 32GB DDR5</text>
+    <text x="380" y="242" class="f-12 t-category">Memoria RAM</text>
+    <text x="490" y="242" class="f-12 t-secondary">2</text>
+    <text x="540" y="242" class="f-12 t-secondary">R$1.150,00</text>
+    <text x="630" y="242" class="f-12 t-success">R$2.300,00</text>
+    <!-- Total bar -->
+    <rect x="206" y="334" width="598" height="36" rx="6" class="table-header-bg"/>
+    <text x="790" y="357" text-anchor="end" class="f-14 f-bold t-success">Total:  R$14.000,00</text>
+    <!-- Bottom bar -->
+    <rect x="206" y="374" width="598" height="44" rx="8" fill="#2c2a40"/>
+    <text x="218" y="400" class="f-12 t-muted">RTX 4090  —  1 un. no carrinho</text>
+    <text x="502" y="400" class="f-12 t-secondary">Qtd a remover:</text>
+    <rect x="590" y="384" width="50" height="26" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="615" y="401" text-anchor="middle" class="f-11 t-muted">tudo</text>
+    <rect x="650" y="384" width="148" height="26" rx="6" class="btn-remove"/>
+    <text x="724" y="401" text-anchor="middle" class="f-12 f-bold t-white">Remover do Carrinho</text>
+    <!-- Checkout bar -->
+    <rect x="206" y="422" width="598" height="44" rx="8" fill="transparent"/>
+    <text x="218" y="447" class="f-12 t-muted">Selecione o metodo e finalize:</text>
+    <rect x="380" y="430" width="160" height="28" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="460" y="448" text-anchor="middle" class="f-12 t-secondary">Pix</text>
+    <text x="552" y="447" class="f-11 t-warning">10% desc. — R$1.400,00</text>
+    <rect x="654" y="430" width="144" height="28" rx="6" class="btn-checkout"/>
+    <text x="726" y="448" text-anchor="middle" class="f-13 f-bold t-white">Finalizar Compra</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-success">3 itens  |  Total: R$14.000,00</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 5: LOGIN USUÁRIO  (col 0, row 1)  x=40  y=660 -->
+  <!-- ================================================================ -->
+  <text x="40" y="648" class="screen-label">T05 — Login de Usuário</text>
+  <g transform="translate(40,660)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-muted">Visitante</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="120" width="174" height="1" class="divider"/>
+    <text x="14" y="140" class="f-10 f-bold t-section">CONTA</text>
+    <rect x="8" y="146" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="167" class="f-13 t-info">Cadastrar-se</text>
+    <rect x="8" y="182" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="203" class="f-13 t-info">Fazer Login</text>
+    <rect x="8" y="224" width="174" height="1" class="divider"/>
+    <rect x="8" y="232" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="253" class="f-13 t-muted">Login Admin</text>
+    <rect x="8" y="272" width="174" height="1" class="divider"/>
+    <rect x="8" y="280" width="174" height="32" rx="6" class="btn-danger-bg"/>
+    <text x="18" y="301" class="f-13 t-error">Sair</text>
+    <!-- Content: Login form -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Login de Usuario</text>
+    <!-- Card -->
+    <rect x="206" y="96" width="450" height="310" rx="10" class="card-bg"/>
+    <rect x="242" y="124" width="378" height="1" class="divider"/>
+    <!-- Fields -->
+    <text x="242" y="148" class="f-12 t-muted">Email</text>
+    <rect x="242" y="154" width="378" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="175" class="f-12 t-muted">seu@email.com</text>
+    <text x="242" y="206" class="f-12 t-muted">Senha</text>
+    <rect x="242" y="212" width="336" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="233" class="f-12 t-muted">••••••••</text>
+    <rect x="580" y="212" width="40" height="34" rx="6" fill="#3f3d58"/>
+    <text x="600" y="232" text-anchor="middle" class="f-14">👁̸</text>
+    <!-- Button -->
+    <rect x="242" y="262" width="378" height="36" rx="6" class="btn-primary"/>
+    <text x="431" y="285" text-anchor="middle" class="f-13 f-bold t-white">Entrar</text>
+    <!-- Link -->
+    <text x="431" y="320" text-anchor="middle" class="f-12 t-info">Nao tem conta? Cadastre-se</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 6: CADASTRO  (col 1, row 1)  x=900 y=660 -->
+  <!-- ================================================================ -->
+  <text x="900" y="648" class="screen-label">T06 — Cadastro de Usuário</text>
+  <g transform="translate(900,660)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-muted">Visitante</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="120" width="174" height="1" class="divider"/>
+    <text x="14" y="140" class="f-10 f-bold t-section">CONTA</text>
+    <rect x="8" y="146" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="167" class="f-13 t-info">Cadastrar-se</text>
+    <rect x="8" y="182" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="203" class="f-13 t-info">Fazer Login</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Cadastro de Usuario</text>
+    <rect x="206" y="96" width="500" height="380" rx="10" class="card-bg"/>
+    <!-- Nome + Sobrenome labels -->
+    <text x="242" y="122" class="f-12 t-muted">Nome</text>
+    <text x="452" y="122" class="f-12 t-muted">Sobrenome</text>
+    <rect x="242" y="128" width="200" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="149" class="f-12 t-muted">ex: Joao</text>
+    <rect x="452" y="128" width="218" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="466" y="149" class="f-12 t-muted">ex: Silva</text>
+    <!-- Email -->
+    <text x="242" y="180" class="f-12 t-muted">Email</text>
+    <rect x="242" y="186" width="428" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="207" class="f-12 t-muted">seu@email.com</text>
+    <!-- CPF -->
+    <text x="242" y="238" class="f-12 t-muted">CPF</text>
+    <rect x="242" y="244" width="428" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="265" class="f-12 t-secondary">123.456.789-10</text>
+    <!-- Senha -->
+    <text x="242" y="296" class="f-12 t-muted">Senha</text>
+    <rect x="242" y="302" width="386" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="323" class="f-12 t-muted">••••••••</text>
+    <rect x="630" y="302" width="40" height="34" rx="6" fill="#3f3d58"/>
+    <text x="650" y="322" text-anchor="middle" class="f-14">👁̸</text>
+    <!-- Button -->
+    <rect x="242" y="352" width="428" height="36" rx="6" class="btn-primary"/>
+    <text x="456" y="375" text-anchor="middle" class="f-13 f-bold t-white">Cadastrar</text>
+    <!-- Link -->
+    <text x="456" y="414" text-anchor="middle" class="f-12 t-info">Ja tem conta? Fazer login</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 7: PAGAMENTO CARTÃO  (col 2, row 1)  x=1760 y=660 -->
+  <!-- ================================================================ -->
+  <text x="1760" y="648" class="screen-label">T04 — Dados do Cartão / Parcelamento</text>
+  <g transform="translate(1760,660)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-info">Joao Silva</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="72" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="78" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="99" class="f-13 t-secondary">Listar Produtos</text>
+    <rect x="8" y="114" width="174" height="32" rx="6" fill="#3f3d58"/>
+    <text x="18" y="135" class="f-13 t-secondary">Ver Carrinho</text>
+    <rect x="8" y="156" width="174" height="1" class="divider"/>
+    <text x="18" y="186" class="f-12 f-bold t-success">Joao Silva</text>
+    <rect x="8" y="196" width="174" height="32" rx="6" fill="transparent"/>
+    <text x="18" y="217" class="f-13 t-error">Logout</text>
+    <!-- Content: Card form -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Dados do Cartao</text>
+    <rect x="202" y="88" width="600" height="390" rx="10" class="card-bg"/>
+    <text x="218" y="114" class="f-12 t-muted">Subtotal: R$14.000,00  |  Metodo: Cartão de Crédito</text>
+    <!-- Card number -->
+    <text x="238" y="142" class="f-12 t-muted">Numero do Cartao</text>
+    <rect x="238" y="148" width="528" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="169" class="f-12 t-muted">0000 0000 0000 0000</text>
+    <!-- Name -->
+    <text x="238" y="198" class="f-12 t-muted">Nome no Cartao</text>
+    <rect x="238" y="204" width="528" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="225" class="f-12 t-muted">NOME SOBRENOME</text>
+    <!-- Validade + CVV -->
+    <text x="238" y="256" class="f-12 t-muted">Validade</text>
+    <text x="468" y="256" class="f-12 t-muted">CVV</text>
+    <rect x="238" y="262" width="220" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="283" class="f-12 t-muted">MM/AA</text>
+    <rect x="468" y="262" width="256" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="482" y="283" class="f-12 t-muted">•••</text>
+    <rect x="684" y="262" width="40" height="34" rx="6" fill="#3f3d58"/>
+    <text x="704" y="282" text-anchor="middle" class="f-14">👁̸</text>
+    <!-- Parcelamento -->
+    <text x="238" y="312" class="f-12 t-muted">Parcelamento</text>
+    <rect x="238" y="318" width="528" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="339" class="f-12 t-secondary">1x R$14.000,00 (sem juros)</text>
+    <!-- Error -->
+    <text x="238" y="366" class="f-11 t-error"></text>
+    <!-- Button -->
+    <rect x="238" y="376" width="528" height="36" rx="6" class="btn-primary"/>
+    <text x="502" y="399" text-anchor="middle" class="f-13 f-bold t-white">Confirmar Pagamento</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-success">3 itens  |  Total: R$14.000,00</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 8: SUCESSO  (col 3, row 1)  x=2660 y=660 -->
+  <!-- ================================================================ -->
+  <text x="2660" y="648" class="screen-label">T07 — Resumo do Pedido (Sucesso)</text>
+  <g transform="translate(2660,660)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-info">Joao Silva</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <!-- Content: Success -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="505" y="200" text-anchor="middle" font-size="64">🎉</text>
+    <text x="505" y="260" text-anchor="middle" class="f-26 f-bold t-success">Compra finalizada com sucesso!</text>
+    <text x="505" y="292" text-anchor="middle" class="f-14 t-secondary">Total pago: R$12.600,00  via Pix</text>
+    <text x="505" y="316" text-anchor="middle" class="f-13 t-warning">Voce economizou R$1.400,00 (10% de desconto)</text>
+    <rect x="352" y="346" width="306" height="34" rx="6" class="btn-primary"/>
+    <text x="505" y="368" text-anchor="middle" class="f-13 f-bold t-white">Voltar ao inicio</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 9: PAINEL ADMIN  (col 0, row 2)  x=40 y=1260 -->
+  <!-- ================================================================ -->
+  <text x="40" y="1248" class="screen-label">T09 — Painel Admin — Cadastrar Mercadoria</text>
+  <g transform="translate(40,1260)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-success">admin (Admin)</text>
+    <!-- Sidebar admin -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="68" class="f-10 f-bold t-section">LOJA</text>
+    <rect x="8" y="74" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="92" class="f-12 t-secondary">Listar Produtos</text>
+    <rect x="8" y="112" width="174" height="1" class="divider"/>
+    <text x="14" y="130" class="f-10 f-bold t-section">ADMIN</text>
+    <rect x="8" y="136" width="174" height="28" rx="6" fill="#3f3d58"/>
+    <text x="18" y="154" class="f-12 t-secondary">Cadastrar Mercadoria</text>
+    <rect x="8" y="168" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="186" class="f-12 t-secondary">Retirar Mercadoria</text>
+    <rect x="8" y="200" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="218" class="f-12 t-secondary">Alterar Preco</text>
+    <rect x="8" y="238" width="174" height="1" class="divider"/>
+    <rect x="8" y="246" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="264" class="f-12 t-secondary">Criar Admin</text>
+    <rect x="8" y="278" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="296" class="f-12 t-secondary">Listar Admins</text>
+    <rect x="8" y="310" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="328" class="f-12 t-secondary">Listar Usuarios</text>
+    <rect x="8" y="342" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="360" class="f-12 t-secondary">Configurar Descontos</text>
+    <rect x="8" y="374" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="392" class="f-12 t-secondary">Configurar Parcelamento</text>
+    <rect x="8" y="410" width="174" height="1" class="divider"/>
+    <rect x="8" y="418" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="436" class="f-12 t-error">Logout</text>
+    <rect x="8" y="452" width="174" height="28" rx="6" class="btn-danger-bg"/>
+    <text x="18" y="470" class="f-12 t-error">Sair</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Cadastrar Mercadoria</text>
+    <rect x="206" y="96" width="450" height="360" rx="10" class="card-bg"/>
+    <!-- Categoria -->
+    <text x="242" y="126" class="f-12 t-muted">Categoria</text>
+    <rect x="242" y="132" width="378" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="153" class="f-12 t-secondary">Placa de Video</text>
+    <!-- Nome -->
+    <text x="242" y="182" class="f-12 t-muted">Nome do Produto</text>
+    <rect x="242" y="188" width="378" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="252" y="209" class="f-12 t-muted">ex: RTX 4090</text>
+    <!-- Preco + Estoque -->
+    <text x="242" y="240" class="f-12 t-muted">Preco (R$)</text>
+    <text x="442" y="240" class="f-12 t-muted">Estoque</text>
+    <rect x="242" y="246" width="190" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="256" y="267" class="f-12 t-muted">ex: 1500.00</text>
+    <rect x="442" y="246" width="178" height="34" rx="6" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="456" y="267" class="f-12 t-muted">ex: 10</text>
+    <!-- Button -->
+    <rect x="242" y="300" width="378" height="36" rx="6" class="btn-primary"/>
+    <text x="431" y="323" text-anchor="middle" class="f-13 f-bold t-white">Cadastrar</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 10: CONFIGURAR DESCONTOS  (col 1, row 2)  x=900 y=1260 -->
+  <!-- ================================================================ -->
+  <text x="900" y="1248" class="screen-label">T15 — Configurar Descontos</text>
+  <g transform="translate(900,1260)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-success">admin (Admin)</text>
+    <!-- Sidebar (same admin sidebar abbreviated) -->
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="68" class="f-10 f-bold t-section">ADMIN</text>
+    <rect x="8" y="74" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="92" class="f-12 t-secondary">Cadastrar Mercadoria</text>
+    <rect x="8" y="106" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="124" class="f-12 t-secondary">Retirar Mercadoria</text>
+    <rect x="8" y="138" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="156" class="f-12 t-secondary">Alterar Preco</text>
+    <rect x="8" y="176" width="174" height="1" class="divider"/>
+    <rect x="8" y="184" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="202" class="f-12 t-secondary">Criar Admin</text>
+    <rect x="8" y="216" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="234" class="f-12 t-secondary">Listar Admins</text>
+    <rect x="8" y="248" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="266" class="f-12 t-secondary">Listar Usuarios</text>
+    <rect x="8" y="280" width="174" height="28" rx="6" fill="#3f3d58"/>
+    <text x="18" y="298" class="f-12 t-secondary">Configurar Descontos</text>
+    <rect x="8" y="312" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="330" class="f-12 t-secondary">Configurar Parcelamento</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Configurar Descontos</text>
+    <rect x="206" y="96" width="450" height="330" rx="10" class="card-bg"/>
+    <text x="242" y="124" class="f-11 t-disabled">Define o % de desconto por metodo (0 a 100)</text>
+    <!-- Rows -->
+    <text x="242" y="158" class="f-13 t-secondary">Cartão de Crédito</text>
+    <rect x="442" y="142" width="78" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="480" y="160" text-anchor="middle" class="f-12 t-secondary">0</text>
+    <text x="526" y="160" class="f-13 t-muted">%</text>
+    <text x="242" y="196" class="f-13 t-secondary">Cartão de Débito</text>
+    <rect x="442" y="180" width="78" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="480" y="198" text-anchor="middle" class="f-12 t-secondary">0</text>
+    <text x="526" y="198" class="f-13 t-muted">%</text>
+    <text x="242" y="234" class="f-13 t-secondary">Boleto</text>
+    <rect x="442" y="218" width="78" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="480" y="236" text-anchor="middle" class="f-12 t-secondary">5</text>
+    <text x="526" y="236" class="f-13 t-muted">%</text>
+    <text x="242" y="272" class="f-13 t-secondary">Pix</text>
+    <rect x="442" y="256" width="78" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="480" y="274" text-anchor="middle" class="f-12 t-secondary">10</text>
+    <text x="526" y="274" class="f-13 t-muted">%</text>
+    <!-- Button -->
+    <rect x="242" y="316" width="378" height="36" rx="6" class="btn-primary"/>
+    <text x="431" y="339" text-anchor="middle" class="f-13 f-bold t-white">Salvar</text>
+    <!-- Success msg -->
+    <text x="242" y="368" class="f-11 t-success">Descontos salvos com sucesso!</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 11: LISTAR USUÁRIOS  (col 2, row 2)  x=1760 y=1260 -->
+  <!-- ================================================================ -->
+  <text x="1760" y="1248" class="screen-label">T14 — Listar Usuários (Admin)</text>
+  <g transform="translate(1760,1260)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-success">admin (Admin)</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="68" class="f-10 f-bold t-section">ADMIN</text>
+    <rect x="8" y="74" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="92" class="f-12 t-secondary">Cadastrar Mercadoria</text>
+    <rect x="8" y="106" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="124" class="f-12 t-secondary">Listar Admins</text>
+    <rect x="8" y="138" width="174" height="28" rx="6" fill="#3f3d58"/>
+    <text x="18" y="156" class="f-12 t-secondary">Listar Usuarios</text>
+    <rect x="8" y="170" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="188" class="f-12 t-secondary">Configurar Descontos</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Usuarios Cadastrados</text>
+    <rect x="206" y="94" width="598" height="380" rx="8" class="table-bg"/>
+    <rect x="210" y="98" width="590" height="30" rx="4" class="table-header-bg"/>
+    <text x="220" y="117" class="f-12 f-bold t-category">ID</text>
+    <text x="270" y="117" class="f-12 f-bold t-category">Nome</text>
+    <text x="450" y="117" class="f-12 f-bold t-category">Email</text>
+    <text x="660" y="117" class="f-12 f-bold t-category">CPF</text>
+    <!-- Rows -->
+    <rect x="210" y="130" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="148" class="f-12 t-primary">1</text>
+    <text x="270" y="148" class="f-12 t-primary">Joao Silva</text>
+    <text x="450" y="148" class="f-12 t-category">jo***@gmail.com</text>
+    <text x="660" y="148" class="f-12 t-muted">***.***.**-10</text>
+    <rect x="210" y="160" width="590" height="28" rx="3" class="row-odd"/>
+    <text x="220" y="178" class="f-12 t-primary">2</text>
+    <text x="270" y="178" class="f-12 t-primary">Maria Santos</text>
+    <text x="450" y="178" class="f-12 t-category">ma***@outlook.com</text>
+    <text x="660" y="178" class="f-12 t-muted">***.***.**-42</text>
+    <rect x="210" y="190" width="590" height="28" rx="3" class="row-even"/>
+    <text x="220" y="208" class="f-12 t-primary">3</text>
+    <text x="270" y="208" class="f-12 t-primary">Carlos Ferreira</text>
+    <text x="450" y="208" class="f-12 t-category">ca***@empresa.com</text>
+    <text x="660" y="208" class="f-12 t-muted">***.***.**-88</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TELA 12: CONFIGURAR PARCELAMENTO  (col 3, row 2)  x=2660 y=1260 -->
+  <!-- ================================================================ -->
+  <text x="2660" y="1248" class="screen-label">T16 — Configurar Parcelamento</text>
+  <g transform="translate(2660,1260)">
+    <rect width="820" height="540" rx="8" class="win-bg"/>
+    <rect width="820" height="540" rx="8" class="win-border"/>
+    <rect width="820" height="46" rx="4" class="header-bg"/>
+    <rect y="40" width="820" height="6" fill="#2c2a40"/>
+    <text x="14" y="29" class="f-20 f-bold t-primary">🛍 Loja</text>
+    <text x="790" y="29" text-anchor="end" class="f-13 t-success">admin (Admin)</text>
+    <rect x="0" y="46" width="190" height="450" class="sidebar-bg"/>
+    <text x="14" y="68" class="f-10 f-bold t-section">ADMIN</text>
+    <rect x="8" y="74" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="92" class="f-12 t-secondary">Configurar Descontos</text>
+    <rect x="8" y="106" width="174" height="28" rx="6" fill="#3f3d58"/>
+    <text x="18" y="124" class="f-12 t-secondary">Configurar Parcelamento</text>
+    <rect x="8" y="138" width="174" height="1" class="divider"/>
+    <rect x="8" y="146" width="174" height="28" rx="6" fill="transparent"/>
+    <text x="18" y="164" class="f-12 t-error">Logout</text>
+    <!-- Content -->
+    <rect x="190" y="46" width="630" height="450" class="content-bg"/>
+    <text x="218" y="80" class="f-20 f-bold t-primary">Configurar Parcelamento</text>
+    <rect x="206" y="96" width="450" height="310" rx="10" class="card-bg"/>
+    <text x="242" y="124" class="f-11 t-disabled">Configuracoes de parcelamento no cartao</text>
+    <!-- Rows -->
+    <text x="242" y="158" class="f-12 t-secondary">Maximo de parcelas</text>
+    <rect x="502" y="142" width="118" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="530" y="160" class="f-12 t-secondary">12</text>
+    <text x="242" y="196" class="f-12 t-secondary">Sem juros ate (parcelas)</text>
+    <rect x="502" y="180" width="118" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="530" y="198" class="f-12 t-secondary">3</text>
+    <text x="242" y="234" class="f-12 t-secondary">Taxa de juros por parcela (%)</text>
+    <rect x="502" y="218" width="118" height="28" rx="4" fill="#1e1d2e" stroke="#3f3d58" stroke-width="0.5"/>
+    <text x="530" y="236" class="f-12 t-secondary">2</text>
+    <!-- Button -->
+    <rect x="242" y="272" width="378" height="36" rx="6" class="btn-primary"/>
+    <text x="431" y="295" text-anchor="middle" class="f-13 f-bold t-white">Salvar</text>
+    <!-- Success msg -->
+    <text x="242" y="330" class="f-11 t-success">Configuracao salva com sucesso!</text>
+    <!-- Footer -->
+    <rect y="496" width="820" height="44" class="footer-bg"/>
+    <text x="16" y="522" class="f-12 t-muted">Carrinho vazio</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- LEGEND (bottom) -->
+  <!-- ================================================================ -->
+  <text x="40" y="1870" font-family="Arial" font-size="18" font-weight="bold" fill="#a5b4fc">Legenda de Cores</text>
+  <rect x="40" y="1886" width="20" height="14" fill="#860029" rx="3"/>
+  <text x="68" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Ação primária</text>
+  <rect x="200" y="1886" width="20" height="14" fill="#6ee7b7" rx="3"/>
+  <text x="228" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Sucesso / Preço</text>
+  <rect x="390" y="1886" width="20" height="14" fill="#f87171" rx="3"/>
+  <text x="418" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Erro / Perigo</text>
+  <rect x="560" y="1886" width="20" height="14" fill="#fbbf24" rx="3"/>
+  <text x="588" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Desconto / Aviso</text>
+  <rect x="760" y="1886" width="20" height="14" fill="#a5b4fc" rx="3"/>
+  <text x="788" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Usuário logado</text>
+  <rect x="960" y="1886" width="20" height="14" fill="#15803d" rx="3"/>
+  <text x="988" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Finalizar / Checkout</text>
+  <rect x="1180" y="1886" width="20" height="14" fill="#67648a" rx="3"/>
+  <text x="1208" y="1898" font-family="Arial" font-size="13" fill="#d1d5db">Item selecionado</text>
+
+  <text x="40" y="1930" font-family="Arial" font-size="12" fill="#575267">Hardware Commerce v2.0 — Protótipos de Interface — Maio/2026</text>
+</svg>

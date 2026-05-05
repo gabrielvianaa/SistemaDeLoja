@@ -1,0 +1,24 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 780 500' width='780' height='500'>
+<rect width='780' height='500' rx='8' fill='#1e1d2e' stroke='#3f3d58' stroke-width='1'/>
+<rect width='780' height='44' fill='#1a192a' stroke='#3f3d58' stroke-width='0.5'/>
+<text x='14' y='27' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='#f3f4f6'>&#x1F6CD; Loja</text>
+<text x='766' y='27' font-family='Arial,sans-serif' font-size='11' fill='#8d8980' text-anchor='end'>Visitante</text><rect x='0' y='44' width='180' height='456' fill='#2c2a40'/>
+<text x='14' y='68' font-family='Arial,sans-serif' font-size='10' fill='#575267'>LOJA</text>
+<text x='14' y='90' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Listar Produtos</text>
+<text x='14' y='120' font-family='Arial,sans-serif' font-size='10' fill='#575267'></text>
+<text x='14' y='150' font-family='Arial,sans-serif' font-size='10' fill='#575267'>CONTA</text>
+<text x='14' y='172' font-family='Arial,sans-serif' font-size='10' fill='#a5b4fc'>Cadastrar-se</text>
+<text x='14' y='202' font-family='Arial,sans-serif' font-size='10' fill='#a5b4fc'>Fazer Login</text>
+<text x='14' y='232' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='262' font-family='Arial,sans-serif' font-size='10' fill='#8d8980'>Login Admin</text>
+<text x='14' y='292' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<rect x='6' y='308' width='168' height='26' rx='6' fill='#3b1515'/>
+<text x='14' y='322' font-family='Arial,sans-serif' font-size='10' fill='#f87171'>Sair</text>
+<rect x='180' y='44' width='600' height='456' fill='#1e1d2e'/>
+<text x='480' y='200' font-family='Arial,sans-serif' font-size='48' text-anchor='middle'>&#x1F6CD;&#xFE0F;</text>
+<text x='480' y='252' font-family='Arial,sans-serif' font-size='22' font-weight='bold' fill='#ccc9e0' text-anchor='middle'>Bem-vindo a Loja</text>
+<text x='480' y='278' font-family='Arial,sans-serif' font-size='11' fill='#706e78' text-anchor='middle'>Selecione uma opcao no menu lateral para comecar.</text>
+<rect x='320' y='292' width='320' height='3' rx='1' fill='#860029'/>
+<rect y='466' width='780' height='34' fill='#2c2a40'/>
+<text x='14' y='486' font-family='Arial,sans-serif' font-size='10' fill='#8d8980'>Carrinho vazio</text>
+</svg>

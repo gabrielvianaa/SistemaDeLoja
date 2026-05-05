@@ -122,7 +122,7 @@ Usuário: admin
 Senha:   admin123
 ```
 
-> ⚠️ **Importante:** altere a senha padrão do admin antes de usar o sistema em produção. Acesse o painel **Configurações → Administradores → Novo admin** para criar um acesso próprio, ou edite diretamente pelo painel admin.
+> ⚠️ **Importante:** altere a senha padrão do admin antes de usar o sistema em produção.
 
 
 ## Guia rápido de uso
@@ -138,12 +138,9 @@ Senha:   admin123
 
 ### Como administrador
 
-1. Clique em **"Admin"** no rodapé da sidebar
+1. Clique em **"Login Admin"** na sidebar
 2. Entre com as credenciais de administrador
-3. Com o modo admin ativo, novos controles aparecem:
-   - Botão **"+ Novo produto"** na barra superior
-   - Botões **"Editar preço"** e **"Remover"** em cada card de produto
-   - Seções **Produtos**, **Usuários** e **Configurações** na sidebar
+3. Com o modo admin ativo, novos controles aparecem na sidebar
 
 ### Métodos de pagamento e descontos padrão
 
@@ -155,65 +152,131 @@ Senha:   admin123
 | Cartão de Crédito | 0% | Até 12× (3× sem juros, 2% a.m. após) |
 | Parcelado | 0% | Até 12× (3× sem juros, 2% a.m. após) |
 
-> Os descontos e regras de parcelamento são **totalmente configuráveis** pelo painel admin em **Configurações**.
+> Os descontos e regras de parcelamento são **totalmente configuráveis** pelo painel admin.
 
 
 ## Interface e Design
 
-### Protótipos das telas
+A documentação completa de interface está em [`docs/documentacao/documentacao-interfaces.md`](docs/documentacao/documentacao-interfaces.md) e o guia de estilo em [`docs/guia-estilo/design-system.md`](docs/guia-estilo/design-system.md).
 
-O diagrama abaixo apresenta os protótipos de alta fidelidade das principais telas do sistema, com a paleta de cores, componentes e layout exatos da implementação.
-
-![Protótipos das telas do Hardware Commerce](docs/prototipos/telas-hardware-commerce.svg)
-
-> As telas representadas: **Boas-vindas · Catálogo (visitante e logado) · Carrinho · Dados do Cartão · Login · Cadastro · Resumo do Pedido · Painel Admin** (Cadastrar Mercadoria, Configurar Descontos, Listar Usuários, Configurar Parcelamento).
+O diagrama de navegação completo está em [`docs/userflow/user-flow.svg`](docs/userflow/user-flow.svg).
 
 ---
 
-### Fluxo do usuário (User Flow)
+### Telas do cliente
 
-O diagrama abaixo ilustra a navegação completa do sistema — fluxo do cliente, fluxo do administrador, validações e estados de erro.
+#### T01 — Boas-vindas
+Tela inicial exibida ao abrir o sistema e após qualquer logout.
 
-![Fluxo do usuário do Hardware Commerce](docs/userflow/user-flow.svg)
+![T01 — Boas-vindas](docs/prototipos/T01-boas-vindas.svg)
 
 ---
 
-### Documentação de interface e design system
+#### T02 — Catálogo de Produtos (Visitante)
+Listagem somente-leitura. Visitantes não podem adicionar ao carrinho.
 
-A documentação detalhada de interface e o guia de estilo estão disponíveis em:
+![T02 — Catálogo Visitante](docs/prototipos/T02-catalogo-visitante.svg)
 
-| Documento | Descrição |
-|---|---|
-| [`docs/documentacao/documentacao-interfaces.md`](docs/documentacao/documentacao-interfaces.md) | Identificação das 16 telas, funcionalidades, regras de navegação e padrões de usabilidade |
-| [`docs/guia-estilo/design-system.md`](docs/guia-estilo/design-system.md) | Paleta de cores (tokens), tipografia, componentes, espaçamentos, animações e estados de interface |
+---
 
-#### Telas do sistema
+#### T02A — Catálogo de Produtos (Logado)
+Versão interativa com seleção de produto, campo de quantidade e botão de adição ao carrinho.
 
-| ID | Tela | Acesso |
-|---|---|---|
-| T01 | Boas-vindas | Público |
-| T02 | Catálogo de Produtos (Visitante) | Público |
-| T02A | Catálogo de Produtos (Logado) | Usuário autenticado |
-| T03 | Carrinho de Compras | Usuário autenticado |
-| T04 | Dados do Cartão / Parcelamento | Usuário autenticado |
-| T05 | Login de Usuário | Público |
-| T06 | Cadastro de Usuário | Público |
-| T07 | Resumo do Pedido | Usuário autenticado |
-| T08 | Login Admin | Público |
-| T09–T16 | Painel Administrativo (8 telas) | Admin autenticado |
+![T02A — Catálogo Logado](docs/prototipos/T02A-catalogo-logado.svg)
 
-#### Paleta de cores principal
+---
 
-| Uso | Cor | Token |
-|---|---|---|
-| Fundo principal | `#1e1d2e` | `bg-primary` |
-| Sidebar / footer | `#2c2a40` | `bg-secondary` |
-| Ação primária | `#860029` | `accent-primary` |
-| Sucesso / preços | `#6ee7b7` | `accent-success` |
-| Erro / estoque baixo | `#f87171` | `accent-error` |
-| Desconto / destaque | `#fbbf24` | `accent-warning` |
-| Usuário logado | `#a5b4fc` | `accent-info` |
+#### T03 — Carrinho de Compras
+Visualização dos itens, remoção, seleção de método de pagamento e finalização.
 
+![T03 — Carrinho](docs/prototipos/T03-carrinho.svg)
+
+---
+
+#### T04 — Dados do Cartão / Parcelamento
+Formulário exibido ao selecionar Cartão de Crédito ou Parcelado.
+
+![T04 — Dados do Cartão](docs/prototipos/T04-dados-cartao.svg)
+
+---
+
+#### T05 — Login de Usuário
+
+![T05 — Login](docs/prototipos/T05-login.svg)
+
+---
+
+#### T06 — Cadastro de Usuário
+CPF é auto-formatado durante a digitação. Após o cadastro o usuário já fica autenticado.
+
+![T06 — Cadastro](docs/prototipos/T06-cadastro.svg)
+
+---
+
+#### T07 — Resumo do Pedido
+Exibida após pagamento bem-sucedido com total pago, desconto e parcelas.
+
+![T07 — Pedido Sucesso](docs/prototipos/T07-pedido-sucesso.svg)
+
+---
+
+### Telas do administrador
+
+#### T08 — Login Admin
+
+![T08 — Login Admin](docs/prototipos/T08-login-admin.svg)
+
+---
+
+#### T09 — Cadastrar Mercadoria
+
+![T09 — Cadastrar Mercadoria](docs/prototipos/T09-cadastrar-mercadoria.svg)
+
+---
+
+#### T10 — Retirar Mercadoria
+Seleção por clique na tabela. Botão desabilitado até seleção.
+
+![T10 — Retirar Mercadoria](docs/prototipos/T10-retirar-mercadoria.svg)
+
+---
+
+#### T11 — Alterar Preço
+
+![T11 — Alterar Preço](docs/prototipos/T11-alterar-preco.svg)
+
+---
+
+#### T12 — Criar Admin
+
+![T12 — Criar Admin](docs/prototipos/T12-criar-admin.svg)
+
+---
+
+#### T13 — Listar Admins
+
+![T13 — Listar Admins](docs/prototipos/T13-listar-admins.svg)
+
+---
+
+#### T14 — Listar Usuários
+Email e CPF mascarados por privacidade.
+
+![T14 — Listar Usuários](docs/prototipos/T14-listar-usuarios.svg)
+
+---
+
+#### T15 — Configurar Descontos
+
+![T15 — Configurar Descontos](docs/prototipos/T15-configurar-descontos.svg)
+
+---
+
+#### T16 — Configurar Parcelamento
+
+![T16 — Configurar Parcelamento](docs/prototipos/T16-configurar-parcelamento.svg)
+
+---
 
 ## Estrutura do projeto
 
@@ -221,32 +284,48 @@ A documentação detalhada de interface e o guia de estilo estão disponíveis e
 SistemaDeLoja/
 ├── main.py                          # Entry point — inicializa banco e loop principal
 ├── requirements.txt
-├── docs/                            # Documentação de interface
-│   ├── prototipos/
-│   │   └── telas-hardware-commerce.svg   # Protótipos de alta fidelidade
+├── docs/
+│   ├── prototipos/                  # SVG individual de cada tela (17 arquivos)
+│   │   ├── T01-boas-vindas.svg
+│   │   ├── T02-catalogo-visitante.svg
+│   │   ├── T02A-catalogo-logado.svg
+│   │   ├── T03-carrinho.svg
+│   │   ├── T04-dados-cartao.svg
+│   │   ├── T05-login.svg
+│   │   ├── T06-cadastro.svg
+│   │   ├── T07-pedido-sucesso.svg
+│   │   ├── T08-login-admin.svg
+│   │   ├── T09-cadastrar-mercadoria.svg
+│   │   ├── T10-retirar-mercadoria.svg
+│   │   ├── T11-alterar-preco.svg
+│   │   ├── T12-criar-admin.svg
+│   │   ├── T13-listar-admins.svg
+│   │   ├── T14-listar-usuarios.svg
+│   │   ├── T15-configurar-descontos.svg
+│   │   └── T16-configurar-parcelamento.svg
 │   ├── userflow/
-│   │   └── user-flow.svg                 # Diagrama de fluxo do usuário
+│   │   └── user-flow.svg
 │   ├── documentacao/
-│   │   └── documentacao-interfaces.md    # Documentação completa de interface
+│   │   └── documentacao-interfaces.md
 │   └── guia-estilo/
-│       └── design-system.md              # Guia de estilo / Design System
+│       └── design-system.md
 └── app/
     ├── core/
-    │   └── carrinho.py              # Camada de Domínio — classe Carrinho e Pedido
+    │   └── carrinho.py
     ├── database/
-    │   ├── models.py                # ORM: Categoria, Produto, Admin, Usuario, CarrinhoItem
-    │   ├── connection.py            # Engine SQLAlchemy + SessionLocal
-    │   ├── database.db              # SQLite — gerado em runtime
-    │   ├── descontos.json           # Configuração de descontos por método
-    │   └── parcelas.json            # Configuração de parcelamento
+    │   ├── models.py
+    │   ├── connection.py
+    │   ├── database.db
+    │   ├── descontos.json
+    │   └── parcelas.json
     ├── services/
-    │   ├── produto_service.py       # CRUD de produtos e categorias
-    │   ├── carrinho_service.py      # Lógica de adição ao carrinho
-    │   ├── usuario_service.py       # Cadastro, login e persistência de carrinho
-    │   ├── admin_service.py         # Autenticação e gestão de admins
-    │   └── pagamento_service.py     # Descontos, parcelamento e pedidos
+    │   ├── produto_service.py
+    │   ├── carrinho_service.py
+    │   ├── usuario_service.py
+    │   ├── admin_service.py
+    │   └── pagamento_service.py
     └── ui/
-        └── app.py                   # Controlador de menus e interface gráfica
+        └── app.py
 ```
 
 
@@ -258,21 +337,11 @@ Werkzeug==3.0.1
 customtkinter
 ```
 
-Para instalar manualmente uma dependência específica:
-
-```bash
-pip install SQLAlchemy==2.0.48
-pip install Werkzeug==3.0.1
-pip install customtkinter
-```
-
 ---
 
 ## Variáveis de configuração
 
-Não há arquivo `.env`. Todas as configurações estão nos arquivos JSON dentro de `app/database/`:
-
-**`descontos.json`** — editável pelo painel admin ou manualmente:
+**`descontos.json`**
 ```json
 {
   "Cartao de Credito": 0.0,
@@ -283,7 +352,7 @@ Não há arquivo `.env`. Todas as configurações estão nos arquivos JSON dentr
 }
 ```
 
-**`parcelas.json`** — editável pelo painel admin ou manualmente:
+**`parcelas.json`**
 ```json
 {
   "max_parcelas": 12,

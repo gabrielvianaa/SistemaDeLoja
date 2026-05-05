@@ -1,0 +1,27 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 780 500' width='780' height='500'>
+<rect width='780' height='500' rx='8' fill='#1e1d2e' stroke='#3f3d58' stroke-width='1'/>
+<rect width='780' height='44' fill='#1a192a' stroke='#3f3d58' stroke-width='0.5'/>
+<text x='14' y='27' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='#f3f4f6'>&#x1F6CD; Loja</text>
+<text x='766' y='27' font-family='Arial,sans-serif' font-size='11' fill='#8d8980' text-anchor='end'>Visitante</text><rect x='0' y='44' width='180' height='456' fill='#2c2a40'/>
+<text x='14' y='68' font-family='Arial,sans-serif' font-size='10' fill='#575267'>LOJA</text>
+<text x='14' y='90' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Listar Produtos</text>
+<text x='14' y='120' font-family='Arial,sans-serif' font-size='10' fill='#575267'></text>
+<text x='14' y='150' font-family='Arial,sans-serif' font-size='10' fill='#575267'>CONTA</text>
+<text x='14' y='172' font-family='Arial,sans-serif' font-size='10' fill='#a5b4fc'>Cadastrar-se</text>
+<text x='14' y='202' font-family='Arial,sans-serif' font-size='10' fill='#a5b4fc'>Fazer Login</text>
+<text x='14' y='232' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='262' font-family='Arial,sans-serif' font-size='10' fill='#8d8980'>Login Admin</text>
+<text x='14' y='292' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<rect x='6' y='308' width='168' height='26' rx='6' fill='#3b1515'/>
+<text x='14' y='322' font-family='Arial,sans-serif' font-size='10' fill='#f87171'>Sair</text><rect x='180' y='44' width='600' height='456' fill='#1e1d2e'/>
+<text x='196' y='86' font-family='Arial,sans-serif' font-size='13' font-weight='bold' fill='#f3f4f6'>Produtos Disponiveis</text>
+<rect x='196' y='100' width='568' height='260' rx='6' fill='#282636'/><rect x='198' y='104' width='580' height='22' rx='4' fill='#575267'/>
+<text x='204' y='117' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Nome</text><text x='424' y='117' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Categoria</text><text x='584' y='117' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Preco</text><text x='694' y='117' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Estoque</text><rect x='198' y='128' width='580' height='20' rx='2' fill='#2e2c44'/>
+<text x='204' y='141' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>RTX 4090</text><text x='424' y='141' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>Placa de Video</text><text x='584' y='141' font-family='Arial,sans-serif' font-size='9' fill='#6ee7b7'>R$8.500,00</text><text x='694' y='141' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>12</text><rect x='198' y='150' width='580' height='20' rx='2' fill='#242238'/>
+<text x='204' y='163' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Intel Core i9-14900K</text><text x='424' y='163' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>Processador</text><text x='584' y='163' font-family='Arial,sans-serif' font-size='9' fill='#6ee7b7'>R$3.200,00</text><text x='694' y='163' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>8</text><rect x='198' y='172' width='580' height='20' rx='2' fill='#2e2c44'/>
+<text x='204' y='185' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Corsair 32GB DDR5</text><text x='424' y='185' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>Memoria RAM</text><text x='584' y='185' font-family='Arial,sans-serif' font-size='9' fill='#6ee7b7'>R$1.150,00</text><text x='694' y='185' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>25</text><rect x='198' y='194' width='580' height='20' rx='2' fill='#242238'/>
+<text x='204' y='207' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Samsung 980 Pro 2TB</text><text x='424' y='207' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>SSD</text><text x='584' y='207' font-family='Arial,sans-serif' font-size='9' fill='#6ee7b7'>R$920,00</text><text x='694' y='207' font-family='Arial,sans-serif' font-size='9' fill='#f87171'>3</text><rect x='198' y='216' width='580' height='20' rx='2' fill='#2e2c44'/>
+<text x='204' y='229' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>ASUS ROG B650E</text><text x='424' y='229' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>Placa-mae</text><text x='584' y='229' font-family='Arial,sans-serif' font-size='9' fill='#6ee7b7'>R$2.400,00</text><text x='694' y='229' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>6</text>
+<text x='198' y='400' font-family='Arial,sans-serif' font-size='9' fill='#706e78'>&#x26A0;&#xFE0F; Estoque abaixo de 5 unidades destacado em vermelho — somente leitura para visitantes</text><rect y='466' width='780' height='34' fill='#2c2a40'/>
+<text x='14' y='486' font-family='Arial,sans-serif' font-size='10' fill='#8d8980'>Carrinho vazio</text>
+</svg>

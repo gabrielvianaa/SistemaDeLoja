@@ -1,0 +1,33 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 780 500' width='780' height='500'>
+<rect width='780' height='500' rx='8' fill='#1e1d2e' stroke='#3f3d58' stroke-width='1'/>
+<rect width='780' height='44' fill='#1a192a' stroke='#3f3d58' stroke-width='0.5'/>
+<text x='14' y='27' font-family='Arial,sans-serif' font-size='16' font-weight='bold' fill='#f3f4f6'>&#x1F6CD; Loja</text>
+<text x='766' y='27' font-family='Arial,sans-serif' font-size='11' fill='#6ee7b7' text-anchor='end'>admin (Admin)</text><rect x='0' y='44' width='180' height='456' fill='#2c2a40'/>
+<text x='14' y='68' font-family='Arial,sans-serif' font-size='10' fill='#575267'>LOJA</text>
+<text x='14' y='90' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Listar Produtos</text>
+<text x='14' y='120' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='150' font-family='Arial,sans-serif' font-size='10' fill='#575267'>ADMIN</text>
+<text x='14' y='172' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Cadastrar Mercadoria</text>
+<text x='14' y='202' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Retirar Mercadoria</text>
+<text x='14' y='232' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Alterar Preco</text>
+<text x='14' y='262' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='292' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Criar Admin</text>
+<text x='14' y='322' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Listar Admins</text>
+<rect x='6' y='338' width='168' height='26' rx='6' fill='#3f3d58'/>
+<text x='14' y='352' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Listar Usuarios</text>
+<text x='14' y='382' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='412' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Config. Descontos</text>
+<text x='14' y='442' font-family='Arial,sans-serif' font-size='10' fill='#d1d5db'>Config. Parcelamento</text>
+<text x='14' y='472' font-family='Arial,sans-serif' font-size='10' fill='#3f3d58'></text>
+<text x='14' y='502' font-family='Arial,sans-serif' font-size='10' fill='#f87171'>Logout</text>
+<rect x='6' y='518' width='168' height='26' rx='6' fill='#3b1515'/>
+<text x='14' y='532' font-family='Arial,sans-serif' font-size='10' fill='#f87171'>Sair</text><rect x='180' y='44' width='600' height='456' fill='#1e1d2e'/>
+<text x='196' y='80' font-family='Arial,sans-serif' font-size='13' font-weight='bold' fill='#f3f4f6'>Usuarios Cadastrados</text>
+<rect x='196' y='96' width='568' height='120' rx='6' fill='#282636'/><rect x='198' y='100' width='568' height='22' rx='4' fill='#575267'/>
+<text x='204' y='113' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>ID</text><text x='256' y='113' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Nome</text><text x='456' y='113' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>Email</text><text x='652' y='113' font-family='Arial,sans-serif' font-size='9' font-weight='bold' fill='#b0adc8'>CPF</text><rect x='198' y='124' width='568' height='20' rx='2' fill='#2e2c44'/>
+<text x='204' y='137' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>1</text><text x='256' y='137' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Joao Silva</text><text x='456' y='137' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>jo***@gmail.com</text><text x='652' y='137' font-family='Arial,sans-serif' font-size='9' fill='#8d8980'>***.***.**-10</text><rect x='198' y='146' width='568' height='20' rx='2' fill='#242238'/>
+<text x='204' y='159' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>2</text><text x='256' y='159' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Maria Santos</text><text x='456' y='159' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>ma***@outlook.com</text><text x='652' y='159' font-family='Arial,sans-serif' font-size='9' fill='#8d8980'>***.***.**-42</text><rect x='198' y='168' width='568' height='20' rx='2' fill='#2e2c44'/>
+<text x='204' y='181' font-family='Arial,sans-serif' font-size='9' fill='#d1d5db'>3</text><text x='256' y='181' font-family='Arial,sans-serif' font-size='9' fill='#f3f4f6'>Carlos Ferreira</text><text x='456' y='181' font-family='Arial,sans-serif' font-size='9' fill='#b0adc8'>ca***@empresa.com</text><text x='652' y='181' font-family='Arial,sans-serif' font-size='9' fill='#8d8980'>***.***.**-88</text>
+<text x='196' y='240' font-family='Arial,sans-serif' font-size='9' fill='#706e78'>&#x1F512; Email e CPF mascarados por privacidade</text><rect y='466' width='780' height='34' fill='#2c2a40'/>
+<text x='14' y='486' font-family='Arial,sans-serif' font-size='10' fill='#8d8980'>Carrinho vazio</text>
+</svg>
